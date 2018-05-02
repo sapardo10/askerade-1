@@ -54,7 +54,7 @@ class Search extends Component
      }
     return (
       <div className="container">
-        {console.log(JSON.querystring.stringify(obj, sep, eq, options);(this.props))}
+        {console.log(JSON.stringify(this.props))}
       { this.props.user ? (
           <div>
           <h2>Add a Survey!</h2>
