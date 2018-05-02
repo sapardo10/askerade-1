@@ -33,18 +33,15 @@ componentDidMount(){
   				if(this.state.survey!==null)
   				{
 
-  				return JSON.stringify(this.state.survey);
+  				return <h1>{this.state.survey.title}</h1>
   				}
   				return "";
 }
 
-  render() {
-  		return(
-  			<div>Survey
-  			<br/>
-  				{this.renderSur()}
-  			</div>
-  			);
-     }
+  render()
+  {
+  		return(this.renderSur());
+  			
+  }
 }
 export default Survey;
