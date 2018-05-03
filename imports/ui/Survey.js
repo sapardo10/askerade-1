@@ -86,14 +86,14 @@ class Survey extends Component
             <div className="card-body" >
               <h5 className="card-title" >{question.title} </h5>
               <div className="container">
-              <div className="row" >
-                  <div className="col-md-6 border" >{question.op1}</div>
-                  <div className="col-md-6 border" >{question.op2}</div>
-              </div>
-              <div className="row" >
-                  <div className="col-md-6 border" >{question.op3}</div>
-                  <div className="col-md-6 border" >{question.op4}</div>
-              </div>
+                <div className="row" >
+                    <div className="col-md-6 border" >{question.op1}</div>
+                    <div className="col-md-6 border" >{question.op2}</div>
+                </div>
+                <div className="row" >
+                    <div className="col-md-6 border" >{question.op3}</div>
+                    <div className="col-md-6 border" >{question.op4}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -119,49 +119,86 @@ class Survey extends Component
           {this.renderquestions(q)
           }
 
+          <br/>
+          <br/>
+          <br/>
+
           <form className="new-question" onSubmit={this.handleSubmit.bind(this)}>
-            <div className="form-group">
+            
+
+
+
+            <div className="card mx-auto"  >
+            <div className="card-body" >
+
+              <div className="form-group card-title">
               <input
-                className="form-control"
+                className="form-control text-center"
                 type="text"
                 ref="title"
                 placeholder="Type the question"
               />            
             </div>
 
-            <div className="form-group">
-              <input
-                className="form-control"
-                type="text"
-                ref="op1"
-                placeholder="Type the option 1"
-              />            
+              <div className="container">
+                <div className="row" >
+                    <div className="col-md-6 border" >
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="op1"
+                          placeholder="Type the option 1"
+                        />            
+                      </div>
+                    </div>
+                    <div className="col-md-6 border" >
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="op2"
+                          placeholder="Type the option 2"
+                        />            
+                      </div>
+                    </div>
+                </div>
+                <div className="row" >
+                    <div className="col-md-6 border" >
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="op3"
+                          placeholder="Type the option 3"
+                        />            
+                      </div>
+                    </div>
+                    <div className="col-md-6 border" >
+                       <div className="form-group">
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="op4"
+                          placeholder="Type the option 4"
+                        />            
+                      </div>
+                    </div>
+                </div>
+              </div>
+              
             </div>
+          </div>
 
-            <div className="form-group">
-              <input
-                className="form-control"
-                type="text"
-                ref="op2"
-                placeholder="Type the option 2"
-              />            
-            </div>
-            <div className="form-group">
-              <input
-                className="form-control"
-                type="text"
-                ref="op3"
-                placeholder="Type the option 3"
-              />            
-            </div>
-            <div className="form-group">
-              <input
-                className="form-control"
-                type="text"
-                ref="op4"
-                placeholder="Type the option 4"
-              />            
-            </div>
+
+
+            
+
+            
+
+            
+            
+           
             
             <input
               className="btn btn-submit"

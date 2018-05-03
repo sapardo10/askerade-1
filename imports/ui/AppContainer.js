@@ -4,6 +4,7 @@ import Header from "./Header";
 import Search from "./Search";
 import Products from "./Products";
 import Survey from "./Survey.js";
+import Answer from "./Answer.js";
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Surveys } from '../api/surveys.js';
@@ -29,6 +30,7 @@ class AppContainer extends Component {
             <Route exact path='/' render={()=><Search user={this.props.user}/>}/>
             <Route path='/products' component={Products}/>
             <Route path='/survey/:number' component={Survey}/>
+            <Route path='/answer/:number' component={Answer}/>
 
 
 
