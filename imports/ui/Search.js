@@ -38,9 +38,7 @@ class Search extends Component
     Meteor.call('surveys.create', title,(err,res)=>{
       if(err)
           throw err;
-        alert(res);
         ReactDOM.findDOMNode(this.refs.title).value = '';
-        this.set
         this.setState({ url:"/survey/"+res,redirect: true })
     });
 

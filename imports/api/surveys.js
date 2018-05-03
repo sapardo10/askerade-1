@@ -29,6 +29,7 @@ Meteor.methods({
     return Surveys.insert({
       title,
       createdAt: new Date(),
+      questions: []
     });
 
   },
@@ -45,6 +46,22 @@ Meteor.methods({
     return Surveys.findOne({_id});
 
   },
+
+  'surveys.addQuestion'(_id, question) {
+
+    check(_id, String);
+
+    if (! this.userId) {
+
+      throw new Meteor.Error('not-authorized');
+
+    }
+
+    return Surveys.update({_id},{$push:{questions: question}});
+
+  },
+
+
 
  
 

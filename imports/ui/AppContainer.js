@@ -10,9 +10,10 @@ import { Surveys } from '../api/surveys.js';
 
 
 
+
+
 class AppContainer extends Component {
   render() {
-      console.log("AppContainer "+JSON.stringify(this.props.user));
 
     return (
 		  <div>
@@ -43,7 +44,6 @@ export default withTracker(() => {
   //Meteor.subscribe('tasks');
   Meteor.subscribe('surveys');
 
-  console.log("withTracker "+JSON.stringify(Meteor.user()));
 
   return {
 
