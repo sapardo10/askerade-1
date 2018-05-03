@@ -5,8 +5,10 @@ import ProductsList from './ProductsList.js';
 import ReactDOM from 'react-dom';
 import { Session } from 'meteor/session';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
- import { Redirect } from 'react-router-dom';
- import { Surveys } from '../api/surveys.js';
+import { Redirect } from 'react-router-dom';
+import { Surveys } from '../api/surveys.js';
+
+import Surveyview from './Surveyview.js';
 
 
 class Search extends Component 
@@ -27,6 +29,18 @@ class Search extends Component
 	someFunction(){
         let params = queryString.parse(this.props.location.search);
         //console.log(params);
+  }
+
+  renderSurveys() {
+
+    console.log(this.props.surveys);
+
+   return this.props.surveys.map((surveyview) => (
+
+      <Surveyview key={surveyview._id} survey={surveyview} />
+
+    ));
+    
   }
 
   handleSubmit(event){
@@ -52,6 +66,15 @@ class Search extends Component
      }
     return (
       <div className="container">
+
+      <h1>Surveys done by you</h1>
+
+          <ul>
+
+            {this.renderSurveys()}
+
+          </ul>
+
         {console.log(JSON.stringify(this.props))}
       { this.props.user ? (
           <div>
@@ -63,6 +86,7 @@ class Search extends Component
                 type="text"
                 ref="title"
                 placeholder="Type the title of the Survey"
+                required
               />            
             </div>
             
@@ -77,30 +101,6 @@ class Search extends Component
 
       </div>
       );
-    /*
-        <div className="container-green">
-        </div>
-        <div className="container-background">
-          <div className="container-fluid container-search">
-
-            <div className="input-group search-div">   
-              <form 
-                className="search-form search-bar"
-                onSubmit={this.handleSubmit.bind(this)} 
-                onChange={this.handleSubmit.bind(this)}> 
-                
-                <input aria-label="Search" ref ="searchValue" type="text" className="form-control" placeholder="Search for..."/>
-              </form>
-            </div>
-            <h5>Remember, to barter, you should offer a product</h5>
-            <h5>Go <a href="/#/products">here</a> to add a product</h5>
-            </div>
-          <ProductsList products={this.props.products}/>
-
-          <h6>Eeny, meeny, miny, moe. With which Product should I go?</h6>
-        </div>
-    );
-        */
   }
 
 }

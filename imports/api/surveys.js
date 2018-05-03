@@ -20,6 +20,12 @@ Meteor.methods({
 
     check(title, String);
 
+    if(title==="") {
+
+      throw new Meteor.Error('Empty field');
+
+    }
+
     if (! this.userId) {
 
       throw new Meteor.Error('not-authorized');
@@ -34,6 +40,7 @@ Meteor.methods({
     });
 
   },
+
   'surveys.get'(_id) {
 
     check(_id, String);
@@ -45,6 +52,13 @@ Meteor.methods({
   'surveys.addQuestion'(_id, question) {
 
     check(_id, String);
+    check(question.title, String);
+
+    if(question.title==="") {
+
+      throw new Meteor.Error('Empty field');
+
+    }
 
     if (! this.userId) {
 

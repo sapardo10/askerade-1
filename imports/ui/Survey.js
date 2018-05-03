@@ -137,6 +137,7 @@ class Survey extends Component
                 type="text"
                 ref="title"
                 placeholder="Type the question"
+                required
               />            
             </div>
 
@@ -190,16 +191,6 @@ class Survey extends Component
             </div>
           </div>
 
-
-
-            
-
-            
-
-            
-            
-           
-            
             <input
               className="btn btn-submit"
               type="submit"

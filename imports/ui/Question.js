@@ -7,7 +7,7 @@ class Question extends Component
   {
   		console.log(this.props.question._id.concat(this.props.id));
   		return <div key = {this.props.question.toString()}>{this.props.question.title}</div>
-  		{
+  		
   			/*
 
 
@@ -27,7 +27,7 @@ class Question extends Component
             </div>
           </div>
           	*/
-  		}
+  		
   			
   }
 }
