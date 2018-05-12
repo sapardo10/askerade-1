@@ -68,5 +68,10 @@ Meteor.methods({
 		check(_id, String);
 		check(active, Boolean);
 		return Surveys.update({_id},{$set: {active} });	
+	},
+	"surveys.removeQuestion"(_id,question){
+		check(_id, String);
+		check(question, Object);
+		return Surveys.update({_id},{$pull:{questions: question}});
 	}
 });

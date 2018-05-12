@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Meteor } from "meteor/meteor";
+import Question from "./Question.js"
 
 
 class Survey extends Component 
 {	
 	constructor(props) {
 		super(props); 
-		console.log(props.match.params.number);
 		this.state = {
 			survey: null,
 		};
@@ -67,37 +67,19 @@ class Survey extends Component
     
   }
 
-  renderquestions(questions)
-  {
-    
-      console.log(questions.length);
-     return questions.map((question,index) => {
-      return (
 
-          
-
-          <div className="card mx-auto"  key={question.toString().concat(index)}>
-            <div className="card-body" >
-              <h5 className="card-title" >{question.title} </h5>
-              <div className="container">
-                <div className="row" >
-                    <div className="col-md-6 border" >{question.op1}</div>
-                    <div className="col-md-6 border" >{question.op2}</div>
-                </div>
-                <div className="row" >
-                    <div className="col-md-6 border" >{question.op3}</div>
-                    <div className="col-md-6 border" >{question.op4}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-      );
-
-    });
-   
-
-  }
+	renderquestions(questions)
+	{
+    console.log(this.state.survey._id);
+		return questions.map((question,index) => {
+			return  <Question
+				key={question.toString().concat(index)}
+				question={question}
+				index={index}
+				survey_id={this.state.survey._id}
+			/>;
+		});
+	}
 
 	changeQuery() {
 		const active = ReactDOM.findDOMNode(this.refs.active).checked;
