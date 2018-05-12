@@ -1,45 +1,43 @@
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { check } from "meteor/check";
 
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { check } from 'meteor/check';
-
-export const Surveys = new Mongo.Collection('surveys');
+export const Surveys = new Mongo.Collection("surveys");
 
 if (Meteor.isServer) {
 
-    Meteor.publish('surveys', function questionsPublication() {
-
-	    return Surveys.find({});
-
+	Meteor.publish("surveys", function questionsPublication() {
+		return Surveys.find({});
 	});
 }
 
 Meteor.methods({
 
-  'surveys.create'(title) {
+	"surveys.create"(title) {
 
-    check(title, String);
+		check(title, String);
 
-    if(title==="") {
+		if(title==="") {
 
-      throw new Meteor.Error('Empty field');
+			throw new Meteor.Error("Empty field");
 
-    }
+		}
 
-    if (! this.userId) {
+		if (! this.userId) {
 
-      throw new Meteor.Error('not-authorized');
+			throw new Meteor.Error("not-authorized");
 
-    }
+		}
 
-    return Surveys.insert({
-      title,
-      createdAt: new Date(),
-      questions: [],
-      answers: [],
-    });
+		return Surveys.insert({
+			owner:this.userId,
+			title,
+			createdAt: new Date(),
+			questions: [],
+			answers: [],
+		});
 
-  },
+	},
 
   'surveys.get'(_id) {
 

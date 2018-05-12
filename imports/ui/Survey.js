@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Surveys } from '../api/surveys.js';
 import ReactDOM from 'react-dom';
 import Question from './Question.js';
+import { Meteor } from 'meteor/meteor';
 
 
 class Survey extends Component 
@@ -107,7 +108,7 @@ class Survey extends Component
 
   renderSur()
   {
-  				if(this.state.survey!==null)
+  				if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
   				{
 
             
