@@ -105,14 +105,14 @@ class Answer extends Component
         }
   }
 
-  renderSur()
-  {
-  				if(this.state.survey!==null)
-  				{
-            return this.renderquestion(this.state.survey.questions[this.state.numQuestion]);
-  				}
-  				return <div><h1>404</h1></div>;
-}
+	renderSur()
+	{
+		if(this.state.survey!==null && this.state.survey.active)
+		{
+			return this.renderquestion(this.state.survey.questions[this.state.numQuestion]);
+		}
+		return <div><h1>404</h1></div>;
+	}
 
   render()
   {

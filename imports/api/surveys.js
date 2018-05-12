@@ -30,6 +30,7 @@ Meteor.methods({
 		}
 
 		return Surveys.insert({
+			active:false,
 			owner:this.userId,
 			title,
 			createdAt: new Date(),
@@ -39,46 +40,33 @@ Meteor.methods({
 
 	},
 
-  'surveys.get'(_id) {
+	"surveys.get"(_id) {
+		check(_id, String);
+		return Surveys.findOne({_id});
+	},
 
-    check(_id, String);
+	"surveys.addQuestion"(_id, question) {
+		check(_id, String);
+		check(question.title, String);
 
-    return Surveys.findOne({_id});
+		if(question.title==="") {
+			throw new Meteor.Error("Empty field");
+		}
 
-  },
+		if (! this.userId) {
+			throw new Meteor.Error("not-authorized");
+		}
+		return Surveys.update({_id},{$push:{questions: question}});
+	},
 
-  'surveys.addQuestion'(_id, question) {
+	"surveys.addAnswerToQuestion"(_id,  answer) {
+		check(_id, String);
+		return Surveys.update({_id},{$push:{answers: answer}});
+	},
 
-    check(_id, String);
-    check(question.title, String);
-
-    if(question.title==="") {
-
-      throw new Meteor.Error('Empty field');
-
-    }
-
-    if (! this.userId) {
-
-      throw new Meteor.Error('not-authorized');
-
-    }
-
-    return Surveys.update({_id},{$push:{questions: question}});
-
-  },
-
-  'surveys.addAnswerToQuestion'(_id,  answer) {
-
-    check(_id, String);
-
-
-    return Surveys.update({_id},{$push:{answers: answer}});
-
-  },
-
-
-
- 
-
+	"surveys.changeActive"(_id, active){
+		check(_id, String);
+		check(active, Boolean);
+		return Surveys.update({_id},{$set: {active} });	
+	}
 });

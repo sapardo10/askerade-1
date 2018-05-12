@@ -1,36 +1,29 @@
 import React, { Component } from "react";
-import { Surveys } from '../api/surveys.js';
-import ReactDOM from 'react-dom';
-import Question from './Question.js';
-import { Meteor } from 'meteor/meteor';
+import ReactDOM from "react-dom";
+import { Meteor } from "meteor/meteor";
 
 
 class Survey extends Component 
 {	
-  constructor(props) {
+	constructor(props) {
+		super(props); 
+		console.log(props.match.params.number);
+		this.state = {
+			survey: null,
+		};
+	}
 
-    super(props); 
-    console.log(props.match.params.number);
+	updateSurvey()
+	{
+		Meteor.call("surveys.get", this.props.match.params.number,(err,res)=>{
+			if(err)
+				throw err;
+			this.setState({
+				survey: res,
+			});
 
-    this.state = {
-      survey: null,
-    };
-
-    
-  }
-
-  updateSurvey()
-  {
-    Meteor.call('surveys.get', this.props.match.params.number,(err,res)=>{
-      if(err)
-          throw err;
-      console.log(res);
-        this.setState({
-            survey: res,
-        })
-
-    });
-  }
+		});
+	}
 
 
   componentDidMount()
@@ -106,16 +99,65 @@ class Survey extends Component
 
   }
 
-  renderSur()
-  {
-  				if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
-  				{
+	changeQuery() {
+		const active = ReactDOM.findDOMNode(this.refs.active).checked;
+		Meteor.call("surveys.changeActive",this.state.survey._id,active);
+	}
+	isChecked(){
+		return this.state.survey.active?"defaultChecked":"";
+	}
 
-            
+	renderInput()
+	{
+		if(this.state.survey.active)
+		{
+			return( 
+				<input 
+					ref="active"
+					type="checkbox" 
+					onChange={this.changeQuery.bind(this)}
+					defaultChecked
+				/>);
+		}
+		else
+		{
+			return( 
+				<input 
+					ref="active"
+					type="checkbox" 
+					onChange={this.changeQuery.bind(this)}
+				/>);
+		}
+	}
 
-          const q = this.state.survey.questions;
-          return<div>
+	renderConfigMenu()
+	{
+		return(
+			<div className="row">
+				<div className="col-md-3" ></div>
+				<div className="col-md-3" >
+					<h2>Active</h2>
+				</div>
+				<div className="col-md-3" >
+					<label className="switch">
+						{this.renderInput()}
+						<span className="slider round"></span>
+					</label>
+				</div>
+				<div className="col-md-3" ></div>
+			</div>
+		);
+	}
+
+	renderSur()
+	{
+		if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
+		{
+			const q = this.state.survey.questions;
+			return<div className="container">
           <h1>{this.state.survey.title}</h1>
+          <br/>
+          {this.renderConfigMenu()}
 
           {this.renderquestions(q)
           }
