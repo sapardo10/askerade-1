@@ -84,6 +84,7 @@ Meteor.methods({
 				"questions.$.op2" : question.op2,
 				"questions.$.op3" : question.op3,
 				"questions.$.op4" : question.op4,
+				"questions.$.multiple" : question.multiple,
 			} } , 
 			false , 
 			true);
