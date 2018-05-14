@@ -10,28 +10,23 @@ class Question extends Component
 					<h5 className="card-title" >{this.props.question.title} </h5>
 					<div className="container">
 						{this.renderOptions()}
-						<div className="row" >
-							<div className="col-md-6 border" >
-								<button
-									value={this.props.index}
-									onClick={this.props.removeQuestion} 
-									className="btn-primary">
-									remove</button></div>
-							<div className="col-md-6 border" >
-								<button
-									value={this.props.index}
-									onClick={this.props.editQuestion} 
-									className="btn-primary">
-									edit</button></div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
 		);  
 	}
+	renderOption(option)
+	{
+		return(
+			<div className="col-md-6 border" >
+				<button onClick={this.props.registerAnswer} type="button" value={option}>{option}</button>
+			</div>
+		);
+	}
 	renderOptions()
 	{
-		if(this.props.question.multiple)
+		if(this.props.question.multiple && !this.props.answer)
 		{
 			return(
 				<div>
@@ -43,6 +38,65 @@ class Question extends Component
 						<div className="col-md-6 border" >{this.props.question.op3}</div>
 						<div className="col-md-6 border" >{this.props.question.op4}</div>
 					</div>
+					<div className="row" >
+						<div className="col-md-6 border" >
+							<button
+								value={this.props.index}
+								onClick={this.props.removeQuestion} 
+								className="btn-primary">
+								remove</button></div>
+						<div className="col-md-6 border" >
+							<button
+								value={this.props.index}
+								onClick={this.props.editQuestion} 
+								className="btn-primary">
+								edit</button></div>
+					</div>
+				</div>
+			);
+		}
+		else if(this.props.question.multiple && this.props.answer)
+		{
+			return(
+				<div>
+					<div className="row" >
+						
+						{this.renderOption(this.props.question.op1)}
+						{this.renderOption(this.props.question.op2)}						
+					</div>
+					<div className="row" >
+						{this.renderOption(this.props.question.op3)}
+						{this.renderOption(this.props.question.op4)}
+					</div>
+				</div>
+			);
+		}
+		else if(this.props.answer)
+		{
+			return(
+				<div>
+					
+					<form 
+						onSubmit={this.props.handleSubmit}
+					>
+						<textarea 
+							placeholder="Answer here"
+							type="text"
+							ref="answer"
+							rows="4" 
+							cols="50" 
+							name="comment" 
+							form="usrform">
+
+						</textarea>         
+
+						<input
+							className="btn btn-submit"
+							type="submit"
+							value="send"
+						/>
+
+					</form> 
 				</div>
 			);
 		}
