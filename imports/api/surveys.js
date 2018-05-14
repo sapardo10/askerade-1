@@ -73,5 +73,19 @@ Meteor.methods({
 		check(_id, String);
 		check(question, Object);
 		return Surveys.update({_id},{$pull:{questions: question}});
+	},
+	"surveys.updateQuestion"(_id,question){
+		check(_id, String);
+		check(question, Object);
+		return Surveys.update( {_id, "questions._id" : question._id } , 
+			{$set : {
+				"questions.$.title" : question.title,
+				"questions.$.op1" : question.op1,
+				"questions.$.op2" : question.op2,
+				"questions.$.op3" : question.op3,
+				"questions.$.op4" : question.op4,
+			} } , 
+			false , 
+			true);
 	}
 });

@@ -10,6 +10,7 @@ class Survey extends Component
 		super(props); 
 		this.state = {
 			survey: null,
+			editting:null
 		};
 	}
 
@@ -20,6 +21,7 @@ class Survey extends Component
 				throw err;
 			this.setState({
 				survey: res,
+				editting:null
 			});
 
 		});
@@ -47,6 +49,10 @@ class Survey extends Component
 		console.log("edit "+question.title);
 		this.fillFormQuestion(question);
 		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+		const name ="editting";
+		this.setState(() => ({
+			[name]: question._id
+		}));
 		return;
 		Meteor.call("surveys.removeQuestion",this.state.survey._id,question,(err,res)=>{
 			if(err)
@@ -63,36 +69,56 @@ class Survey extends Component
 	 this.updateSurvey();
   }
 
-  handleSubmit(event){
+	handleSubmit(event){
+		event.preventDefault();
 
-    event.preventDefault();
+		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
+		const op1 = ReactDOM.findDOMNode(this.refs.op1).value.trim();
+		const op2 = ReactDOM.findDOMNode(this.refs.op2).value.trim();
+		const op3 = ReactDOM.findDOMNode(this.refs.op3).value.trim();
+		const op4 = ReactDOM.findDOMNode(this.refs.op4).value.trim();
+		const _id= this.state.editting||new Date().getTime().toString();
+		const question = {
+			title,
+			op1,
+			op2,
+			op3,
+			op4,
+			_id,
+		};
 
-    const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
-    const op1 = ReactDOM.findDOMNode(this.refs.op1).value.trim();
-    const op2 = ReactDOM.findDOMNode(this.refs.op2).value.trim();
-    const op3 = ReactDOM.findDOMNode(this.refs.op3).value.trim();
-    const op4 = ReactDOM.findDOMNode(this.refs.op4).value.trim();
-    const _id= new Date().getTime().toString();
-    const question = {
-      title,
-      op1,
-      op2,
-      op3,
-      op4,
-      _id,
-    }
+		console.log(question);
 
-    console.log(question);
+		if(this.state.editting)
+		{
+			console.log("editting");
+			Meteor.call("surveys.updateQuestion", this.state.survey._id,question,(err,res)=>{
+				if(err)
+					throw err;
 
-		Meteor.call("surveys.addQuestion", this.state.survey._id,question,(err,res)=>{
-			if(err)
-				throw err;
-        
-			
-			this.fillForm("","","","","","");
+				const name ="editting";
+				this.setState(() => ({
+					[name]: null
+				}));
+				
+				this.fillForm("","","","","","");
 
-			this.updateSurvey();
-		});
+				this.updateSurvey();
+			});
+
+		}
+		else
+		{
+
+			Meteor.call("surveys.addQuestion", this.state.survey._id,question,(err,res)=>{
+				if(err)
+					throw err;
+				
+				this.fillForm("","","","","","");
+
+				this.updateSurvey();
+			});
+		}
 	}
 
 	fillForm(title, op1, op2, op3, op4)
@@ -193,7 +219,7 @@ class Survey extends Component
 
           <form 
           	className="new-question"
-          	ref={(el) => { this.messagesEnd = el; }} 
+          	ref={(el) => { this.messagesEnd = el; }}
           	onSubmit={this.handleSubmit.bind(this)}>
             
 
@@ -265,7 +291,7 @@ class Survey extends Component
             <input
               className="btn btn-submit"
               type="submit"
-              placeholder="Add question"
+              value={this.state.editting?"Update question":"Add question"}
             />
 
           </form>  
