@@ -39,6 +39,24 @@ class Survey extends Component
 		});
 	}
 
+	editQuestion(event)
+	{
+		event.preventDefault();	
+		console.log("Edit");
+		let question = this.state.survey.questions[event.target.value];
+		console.log("edit "+question.title);
+		this.fillFormQuestion(question);
+		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+		return;
+		Meteor.call("surveys.removeQuestion",this.state.survey._id,question,(err,res)=>{
+			if(err)
+				throw err;
+			
+			console.log("deleted");
+			this.updateSurvey();
+		});
+	}
+
 
   componentDidMount()
   {
@@ -70,23 +88,33 @@ class Survey extends Component
 			if(err)
 				throw err;
         
-			ReactDOM.findDOMNode(this.refs.title).value = "";
-			ReactDOM.findDOMNode(this.refs.op1).value = "";
-			ReactDOM.findDOMNode(this.refs.op2).value = "";
-			ReactDOM.findDOMNode(this.refs.op3).value = "";
-			ReactDOM.findDOMNode(this.refs.op4).value = "";
+			
+			this.fillForm("","","","","","");
 
 			this.updateSurvey();
 		});
 	}
 
+	fillForm(title, op1, op2, op3, op4)
+	{
+		ReactDOM.findDOMNode(this.refs.title).value = title;
+		ReactDOM.findDOMNode(this.refs.op1).value = op1;
+		ReactDOM.findDOMNode(this.refs.op2).value = op2;
+		ReactDOM.findDOMNode(this.refs.op3).value = op3;
+		ReactDOM.findDOMNode(this.refs.op4).value = op4;
+	}
+
+	fillFormQuestion(question)
+	{
+		this.fillForm(question.title, question.op1, question.op2, question.op3, question.op4);
+	}
+
 
 	renderquestions(questions)
 	{
-    console.log(this.state.survey._id);
 		return questions.map((question,index) => {
-			console.log("INDEX "+index);
 			return  <Question
+				editQuestion={this.editQuestion.bind(this)}
 				removeQuestion={this.removeQuestion.bind(this)}
 				key={question.toString().concat(index)}
 				question={question}
@@ -163,7 +191,10 @@ class Survey extends Component
           <br/>
           <br/>
 
-          <form className="new-question" onSubmit={this.handleSubmit.bind(this)}>
+          <form 
+          	className="new-question"
+          	ref={(el) => { this.messagesEnd = el; }} 
+          	onSubmit={this.handleSubmit.bind(this)}>
             
 
 

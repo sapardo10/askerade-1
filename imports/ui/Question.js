@@ -24,7 +24,12 @@ class Question extends Component
 									onClick={this.props.removeQuestion} 
 									className="btn-primary">
 									remove</button></div>
-							<div className="col-md-6 border" ><button className="btn-primary">edit</button></div>
+							<div className="col-md-6 border" >
+								<button
+									value={this.props.index}
+									onClick={this.props.editQuestion} 
+									className="btn-primary">
+									edit</button></div>
 						</div>
 					</div>
 				</div>
