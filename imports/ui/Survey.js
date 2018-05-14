@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Meteor } from "meteor/meteor";
-import Question from "./Question.js"
+import Question from "./Question.js";
 
 
 class Survey extends Component 
@@ -22,6 +22,20 @@ class Survey extends Component
 				survey: res,
 			});
 
+		});
+	}
+
+
+	removeQuestion(event)
+	{
+		event.preventDefault();
+		let question = this.state.survey.questions[event.target.value];
+		Meteor.call("surveys.removeQuestion",this.state.survey._id,question,(err,res)=>{
+			if(err)
+				throw err;
+			
+			console.log("deleted");
+			this.updateSurvey();
 		});
 	}
 
@@ -52,27 +66,28 @@ class Survey extends Component
 
     console.log(question);
 
-    Meteor.call('surveys.addQuestion', this.state.survey._id,question,(err,res)=>{
-      if(err)
-          throw err;
-        ReactDOM.findDOMNode(this.refs.title).value = '';
-        ReactDOM.findDOMNode(this.refs.op1).value = '';
-        ReactDOM.findDOMNode(this.refs.op2).value = '';
-        ReactDOM.findDOMNode(this.refs.op3).value = '';
-        ReactDOM.findDOMNode(this.refs.op4).value = '';
+		Meteor.call("surveys.addQuestion", this.state.survey._id,question,(err,res)=>{
+			if(err)
+				throw err;
+        
+			ReactDOM.findDOMNode(this.refs.title).value = "";
+			ReactDOM.findDOMNode(this.refs.op1).value = "";
+			ReactDOM.findDOMNode(this.refs.op2).value = "";
+			ReactDOM.findDOMNode(this.refs.op3).value = "";
+			ReactDOM.findDOMNode(this.refs.op4).value = "";
 
-        this.updateSurvey();
-    });
-
-    
-  }
+			this.updateSurvey();
+		});
+	}
 
 
 	renderquestions(questions)
 	{
     console.log(this.state.survey._id);
 		return questions.map((question,index) => {
+			console.log("INDEX "+index);
 			return  <Question
+				removeQuestion={this.removeQuestion.bind(this)}
 				key={question.toString().concat(index)}
 				question={question}
 				index={index}
