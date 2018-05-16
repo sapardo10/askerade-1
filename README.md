@@ -8,7 +8,7 @@ making questions to a focus group and taking the answers with statistics.
 This web application is developed in MeteorJS, with React for the front-end.
 
 ## Demo
-//TODO (sapardo10)
+https://askerade.herokuapp.com/
 
 ## Install
 
