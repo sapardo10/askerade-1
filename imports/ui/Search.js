@@ -8,6 +8,7 @@ import { Surveys } from "../api/surveys.js";
 import MyStatefulEditor from "./MyStatefulEditor.js";
 import Surveyview from "./Surveyview.js";
 import Survey from "./Survey.js";
+import Result from "./Result.js";
 
 import ColorSelect from "./ColorSelect.js";
 
@@ -46,6 +47,15 @@ class Search extends Component
 		event.preventDefault();
 		this.modifyState("id", event.target.value);
 		this.modifyState("detail", true);
+	}
+
+	results(event)
+	{
+		event.preventDefault();
+		this.modifyState("id", event.target.value);
+		this.modifyState("result", true);
+		this.modifyState("detail", false);
+
 	}
 
   renderSurveys() {
@@ -93,7 +103,10 @@ class Search extends Component
        return <Redirect to={this.state.url}/>;
      }
      if (this.state.detail) {
-       return <Survey id={this.state.id} />;
+       return <Survey id={this.state.id} results={this.results.bind(this)}/>;
+     }
+     if (this.state.result) {
+       return <Result id={this.state.id} results={this.results.bind(this)}/>;
      }
     return (
       <div className="container">

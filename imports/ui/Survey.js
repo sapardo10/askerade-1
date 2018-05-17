@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import { Meteor } from "meteor/meteor";
 import Question from "./Question.js";
 import swal from "sweetalert";
-import renderHTML from 'react-render-html';
-import MyStatefulEditor from './MyStatefulEditor.js';
+import renderHTML from "react-render-html";
+import MyStatefulEditor from "./MyStatefulEditor.js";
 
 
 
@@ -21,8 +21,8 @@ class Survey extends Component
 
 	updateSurvey()
 	{
-		let id = this.props.id || this.props.match.params.number;
-		Meteor.call("surveys.get", id,(err,res)=>{
+		this.id = this.props.id || this.props.match.params.number;
+		Meteor.call("surveys.get", this.id,(err,res)=>{
 			if(err)
 				throw err;
 			this.modifyState("survey",res);
@@ -73,7 +73,6 @@ class Survey extends Component
 		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 		const multiple = this.state.multiple;
 		const _id= this.state.editting||new Date().getTime().toString();
-		swal("title "+title +" multiple "+multiple +" _id "+_id+" edit "+this.state.editting);
 		
 		var question = {
 			title,
@@ -175,6 +174,42 @@ class Survey extends Component
 	}
 	isChecked(){
 		return this.state.survey.active?"defaultChecked":"";
+	}
+
+	rendeResultsButton()
+	{
+		return( 
+			<button 
+				onClick={this.props.results}
+				value={this.id}
+			>
+			Results
+			</button>
+		);
+	}
+
+	share()
+	{
+		if(!ReactDOM.findDOMNode(this.refs.active).checked)
+		{
+			swal("Please activate the survey to share it");
+		}
+		else
+		{
+			swal("/answer/"+this.id);
+		}
+	}
+
+	rendeShareButton()
+	{
+		return( 
+			<button 
+				onClick={this.share.bind(this)}
+				value={this.id}
+			>
+			Share
+			</button>
+		);
 	}
 
 	renderInput()
@@ -310,6 +345,8 @@ class Survey extends Component
 			return<div className="container" style={{"backgroundColor": this.state.survey.color}}>
 				{renderHTML(this.state.survey.title)}
 				<br/>
+				{this.rendeResultsButton()}
+				{this.rendeShareButton()}
 				{this.renderConfigMenu()}
 
 				{this.renderquestions(q)}
