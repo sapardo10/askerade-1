@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import queryString from 'query-string';
-import { ProductsDB } from '../api/products.js';
-import ProductsList from './ProductsList.js';
-import ReactDOM from 'react-dom';
-import { Session } from 'meteor/session';
-import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
-import { Redirect } from 'react-router-dom';
-import { Surveys } from '../api/surveys.js';
-import MyStatefulEditor from './MyStatefulEditor.js';
-import Surveyview from './Surveyview.js';
-import ColorSelect from './ColorSelect.js';
+import queryString from "query-string";
+import ReactDOM from "react-dom";
+import { Session } from "meteor/session";
+import { DDPRateLimiter } from "meteor/ddp-rate-limiter";
+import { Redirect } from "react-router-dom";
+import { Surveys } from "../api/surveys.js";
+import MyStatefulEditor from "./MyStatefulEditor.js";
+import Surveyview from "./Surveyview.js";
+import ColorSelect from "./ColorSelect.js";
 
 
 
@@ -21,13 +19,13 @@ class Search extends Component
 
     this.state = {
       redirect: false,
-      colorSurvey: '#FFFFFF',
+      colorSurvey: "#FFFFFF",
     };
   }
   
   componentDidMount(){
-    Session.setDefault('searchValue', "");
-    Session.set('searchValue', "");
+    Session.setDefault("searchValue", "");
+    Session.set("searchValue", "");
   }
 	someFunction(){
         let params = queryString.parse(this.props.location.search);
@@ -52,10 +50,10 @@ class Search extends Component
 
     const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 
-    Meteor.call('surveys.create', title, this.state.surveyColor,(err,res)=>{
+    Meteor.call("surveys.create", title, this.state.surveyColor,(err,res)=>{
       if(err)
           throw err;
-        ReactDOM.findDOMNode(this.refs.title).value = '';
+        ReactDOM.findDOMNode(this.refs.title).value = "";
         this.setState({ url:"/survey/"+res,redirect: true })
     });
 
@@ -81,7 +79,7 @@ class Search extends Component
     return (
       <div className="container">
 
-      <h1>Surveys done by you</h1>
+      <h1>Surveys done by you Yeahhh</h1>
 
           <ul>
 
@@ -118,7 +116,7 @@ class Search extends Component
               placeholder="Add question"
             />
 
-          </form></div>) : ''
+          </form></div>) : ""
         }
 
       </div>

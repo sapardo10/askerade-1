@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { Surveys } from '../api/surveys.js';
-import Donut from './Donut.js';
+import React, { Component } from "react";
+import { Surveys } from "../api/surveys.js";
+import Donut from "./Donut.js";
+import marked from "marked";
 
 export default class Surveyview extends Component {
 
@@ -30,8 +31,7 @@ export default class Surveyview extends Component {
 		return (
 
 			<li className="survey-list">
-				
-				{this.props.survey.title}
+				<p dangerouslySetInnerHTML={{__html: marked(this.props.survey.title)}} />
 
 				<br/>
 
@@ -46,7 +46,7 @@ export default class Surveyview extends Component {
 				{this.state.showDetails?(
 					<Donut survey={this.props.survey}/>)
 					:
-					'Nada'}
+					"Nada"}
 
 			</li>
 
