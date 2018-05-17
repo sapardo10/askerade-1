@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
 
-	"surveys.create"(title) {
+	"surveys.create"(title,color) {
 
 		check(title, String);
 
@@ -33,6 +33,7 @@ Meteor.methods({
 			active:false,
 			owner:this.userId,
 			title,
+			color,
 			createdAt: new Date(),
 			questions: [],
 			answers: [],

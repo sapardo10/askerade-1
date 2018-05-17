@@ -6,7 +6,7 @@ class Question extends Component
 	render()
 	{
 		return (
-			<div className="card mx-auto"  >
+			<div className="card mx-auto"  style={{"backgroundColor": this.props.question.color}}>
 				<div className="card-body" >
 					<div className="card-title" >{renderHTML(this.props.question.title)} </div>
 					<div className="container">

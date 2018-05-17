@@ -156,6 +156,7 @@ class Survey extends Component
 				question={question}
 				index={index}
 				survey_id={this.state.survey._id}
+				color={this.state.survey.color}
 			/>;
 		});
 	}
@@ -305,7 +306,7 @@ class Survey extends Component
 		if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
 		{
 			const q = this.state.survey.questions;
-			return<div className="container">
+			return<div className="container" style={{"backgroundColor": this.state.survey.color}}>
 				{renderHTML(this.state.survey.title)}
 				<br/>
 				{this.renderConfigMenu()}

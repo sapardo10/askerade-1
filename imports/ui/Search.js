@@ -9,6 +9,8 @@ import { Redirect } from 'react-router-dom';
 import { Surveys } from '../api/surveys.js';
 import MyStatefulEditor from './MyStatefulEditor.js';
 import Surveyview from './Surveyview.js';
+import ColorSelect from './ColorSelect.js';
+
 
 
 class Search extends Component 
@@ -19,6 +21,7 @@ class Search extends Component
 
     this.state = {
       redirect: false,
+      colorSurvey: '#FFFFFF',
     };
   }
   
@@ -49,7 +52,7 @@ class Search extends Component
 
     const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 
-    Meteor.call('surveys.create', title,(err,res)=>{
+    Meteor.call('surveys.create', title, this.state.surveyColor,(err,res)=>{
       if(err)
           throw err;
         ReactDOM.findDOMNode(this.refs.title).value = '';
@@ -61,6 +64,13 @@ class Search extends Component
 
   onChange(value) {
     ReactDOM.findDOMNode(this.refs.title).value = value;
+  }
+
+  onChangeColor(color) {
+    console.log(color.hex);
+    this.setState({
+      surveyColor: color.hex
+    });
   }
 
   render() {
@@ -97,6 +107,11 @@ class Search extends Component
               <MyStatefulEditor onChange={this.onChange.bind(this)}/>            
             </div>
             
+            <ColorSelect 
+              color={this.state.colorSurvey} 
+              onChangeComplete={this.onChangeColor.bind(this)} 
+            />
+
             <input
               className="btn btn-submit"
               type="submit"
