@@ -87,7 +87,7 @@ export default class StackedBarChart extends Component {
 
 		// Create rectangles of the correct width
 		bar.append("rect")
-			.attr("fill", function(d,i) { return d3.color(i % data.series.length); })
+			.attr("fill", (d,i) =>{ return this.color(i % data.series.length); })
 			.attr("class", "bar")
 			.attr("width", x)
 			.attr("height", this.barHeight - 1);
@@ -112,7 +112,7 @@ export default class StackedBarChart extends Component {
 				else
 					return "";});
 
-			let p = "translate(" + this.spaceForLabels + ", " + -this.gapBetweenGroups/2 + ")";
+		let p = "translate(" + this.spaceForLabels + ", " + -this.gapBetweenGroups/2 + ")";
 
 		chart.append("g")
 			.attr("class", "y axis")
@@ -135,7 +135,6 @@ export default class StackedBarChart extends Component {
 				var horz = this.spaceForLabels + this.chartWidth + 40 - legendRectSize;
 				var vert = i * height - offset;
 				let r = "translate(" + horz + "," + vert + ")";
-							console.log("pPPPPPPPPPPPPPPPPPP: "+r);
 
 				return r;
 			});
@@ -143,8 +142,8 @@ export default class StackedBarChart extends Component {
 		legend.append("rect")
 			.attr("width", legendRectSize)
 			.attr("height", legendRectSize)
-			.style("fill", function (d, i) { return d3.color(i); })
-			.style("stroke", function (d, i) { return d3.color(i); });
+			.style("fill",  (d, i)=>{ return this.color(i); })
+			.style("stroke",  (d, i) =>{ return this.color(i); });
 
 		legend.append("text")
 			.attr("class", "legend")
