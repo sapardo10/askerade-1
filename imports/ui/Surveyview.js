@@ -16,15 +16,7 @@ export default class Surveyview extends Component {
    		};
 	}
 
-	toggleHideCompleted() {
 
-	    this.setState({
-
-	      showDetails: !this.state.showDetails,
-
-	    });
-
-  	}
 
 	render() {
 
@@ -36,9 +28,10 @@ export default class Surveyview extends Component {
 				<br/>
 
 				<button 
+					value={this.props.survey._id}
 					className="btn btn-details"
-					 onClick={this.toggleHideCompleted.bind(this)}
-					 >Details
+					onClick={this.props.details}
+				>Details
 				</button>
 
 				<br/>

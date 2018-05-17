@@ -21,7 +21,8 @@ class Survey extends Component
 
 	updateSurvey()
 	{
-		Meteor.call("surveys.get", this.props.match.params.number,(err,res)=>{
+		let id = this.props.id || this.props.match.params.number;
+		Meteor.call("surveys.get", id,(err,res)=>{
 			if(err)
 				throw err;
 			this.modifyState("survey",res);

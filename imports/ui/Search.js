@@ -7,6 +7,8 @@ import { Redirect } from "react-router-dom";
 import { Surveys } from "../api/surveys.js";
 import MyStatefulEditor from "./MyStatefulEditor.js";
 import Surveyview from "./Surveyview.js";
+import Survey from "./Survey.js";
+
 import ColorSelect from "./ColorSelect.js";
 
 
@@ -32,13 +34,27 @@ class Search extends Component
         //console.log(params);
   }
 
+  modifyState(name,value)
+	{
+		this.setState(() => ({
+			[name]: value
+		}));
+	}
+
+	details(event)
+	{
+		event.preventDefault();
+		this.modifyState("id", event.target.value);
+		this.modifyState("detail", true);
+	}
+
   renderSurveys() {
 
     console.log(this.props.surveys);
 
    return this.props.surveys.map((surveyview) => (
 
-      <Surveyview key={surveyview._id} survey={surveyview} />
+      <Surveyview key={surveyview._id} survey={surveyview} details={this.details.bind(this)} />
 
     ));
     
@@ -75,6 +91,9 @@ class Search extends Component
 
     if (this.state.redirect) {
        return <Redirect to={this.state.url}/>;
+     }
+     if (this.state.detail) {
+       return <Survey id={this.state.id} />;
      }
     return (
       <div className="container">
