@@ -106,7 +106,7 @@ class Search extends Component
        return <Survey id={this.state.id} results={this.results.bind(this)}/>;
      }
      if (this.state.result) {
-       return <Result id={this.state.id} results={this.results.bind(this)}/>;
+       return <Result id={this.state.id}/>;
      }
     return (
       <div className="container">
