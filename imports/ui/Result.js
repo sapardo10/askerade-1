@@ -1,17 +1,52 @@
 import React, { Component } from "react";
-
+import GroupedHorizontalBarChart from "./viz/GroupedHorizontalBarChart";
 export default class Result extends Component {
 	constructor(props) {
 		super(props); 
 		this.state = {
 			survey: null,
+			numQuestion:0
 		};
 	}
-	render() {
-		console.log(this.state.survey);
-		return (
-			<div>Result of {this.props.id}</div>
-		);
+	renderChart(question){
+		var data = {
+  labels: [
+    'Pregunta 1'
+  ],
+  series: [
+    {
+      label: 'respuesta A',
+      values: [4]
+    },
+    {
+      label: 'respuesta B',
+      values: [12 ]
+    },
+    {
+      label: 'respuesta C',
+      values: [31]
+    },{
+      label: 'respuesta D',
+      values: [8]
+    }]
+};
+		console.log(question);
+		return <GroupedHorizontalBarChart data = {data}/>;
+	}
+	
+
+	renderSur()
+	{
+		if(this.state.survey!==null )
+		{
+			return this.renderChart(this.state.survey.questions[this.state.numQuestion]);
+		}
+		return <div><h1>404</h1></div>;
+	}
+
+	render()
+	{
+		return(this.renderSur());
 	}
 	componentDidMount()
 	{
