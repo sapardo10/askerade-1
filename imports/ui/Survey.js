@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Meteor } from "meteor/meteor";
 import Question from "./Question.js";
 import swal from "sweetalert";
+import renderHTML from 'react-render-html';
+import MyStatefulEditor from './MyStatefulEditor.js';
 
 
 
@@ -294,13 +296,17 @@ class Survey extends Component
 		}
 	}
 
+	onChange(value) {
+   	 ReactDOM.findDOMNode(this.refs.title).value = value;
+ 	}
+
 	renderSur()
 	{
 		if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
 		{
 			const q = this.state.survey.questions;
 			return<div className="container">
-				<h1>{this.state.survey.title}</h1>
+				{renderHTML(this.state.survey.title)}
 				<br/>
 				{this.renderConfigMenu()}
 
@@ -324,7 +330,9 @@ class Survey extends Component
 									ref="title"
 									placeholder="Type the question"
 									required
-								/>            
+									hidden
+								/>        
+								<MyStatefulEditor onChange={this.onChange.bind(this)}/>    
 							</div>
 
 							{this.renderConfigQuestion()}

@@ -7,7 +7,7 @@ import { Session } from 'meteor/session';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Redirect } from 'react-router-dom';
 import { Surveys } from '../api/surveys.js';
-
+import MyStatefulEditor from './MyStatefulEditor.js';
 import Surveyview from './Surveyview.js';
 
 
@@ -59,6 +59,10 @@ class Search extends Component
     
   }
 
+  onChange(value) {
+    ReactDOM.findDOMNode(this.refs.title).value = value;
+  }
+
   render() {
 
     if (this.state.redirect) {
@@ -87,7 +91,10 @@ class Search extends Component
                 ref="title"
                 placeholder="Type the title of the Survey"
                 required
-              />            
+                hidden
+              />
+
+              <MyStatefulEditor onChange={this.onChange.bind(this)}/>            
             </div>
             
             <input

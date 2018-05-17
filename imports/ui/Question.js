@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import renderHTML from 'react-render-html';
 
 class Question extends Component 
 {
@@ -7,7 +8,7 @@ class Question extends Component
 		return (
 			<div className="card mx-auto"  >
 				<div className="card-body" >
-					<h5 className="card-title" >{this.props.question.title} </h5>
+					<div className="card-title" >{renderHTML(this.props.question.title)} </div>
 					<div className="container">
 						{this.renderOptions()}
 						
