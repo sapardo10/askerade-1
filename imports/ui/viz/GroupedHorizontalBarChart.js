@@ -98,7 +98,7 @@ export default class StackedBarChart extends Component {
 			.attr("y", this.barHeight / 2)
 			.attr("fill", "red")
 			.attr("dy", ".35em")
-			.text(function(d) { return d; });
+			.html(function(d) { return d; });
 
 		// Draw labels
 		bar.append("text")

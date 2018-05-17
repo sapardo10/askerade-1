@@ -70,6 +70,31 @@ Meteor.methods({
 		check(active, Boolean);
 		return Surveys.update({_id},{$set: {active} });	
 	},
+	"survey.countAnswers"(_id){
+		check(_id, String);
+		let op1 = Surveys.find({$and: [
+			{"answers":{$elemMatch:{"value":"op1"}}},
+			{_id}
+		]}).count();
+		let op2 = Surveys.find({$and: [
+			{"answers":{$elemMatch:{"value":"op2"}}},
+			{_id}
+		]}).count();
+		let op3 = Surveys.find({$and: [
+			{"answers":{$elemMatch:{"value":"mal"}}},
+			{_id}
+		]}).count();
+		let op4 = Surveys.find({$and: [
+			{"answers":{$elemMatch:{"value":"op4"}}},
+			{_id}
+		]}).count();
+		let arr = [];
+		arr.push(op1);
+		arr.push(op2);
+		arr.push(op3);
+		arr.push(op4);
+		return arr;
+	},
 	"surveys.removeQuestion"(_id,question){
 		check(_id, String);
 		check(question, Object);

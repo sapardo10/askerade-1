@@ -5,41 +5,72 @@ export default class Result extends Component {
 		super(props); 
 		this.state = {
 			survey: null,
-			numQuestion:0
+			data:null,
+			numQuestion:0,
+			actualizando:false
 		};
 	}
-	renderChart(question){
-		var data = {
-  labels: [
-    'Pregunta 1'
-  ],
-  series: [
-    {
-      label: 'respuesta A',
-      values: [4]
-    },
-    {
-      label: 'respuesta B',
-      values: [12 ]
-    },
-    {
-      label: 'respuesta C',
-      values: [31]
-    },{
-      label: 'respuesta D',
-      values: [8]
-    }]
-};
+	getData(question){
+		this.modifyState("actualizando",true);
+
+		console.log("renderChart");
+		Meteor.call("survey.countAnswers",this.state.survey._id,(err,res)=>{
+			if(err)
+				throw err;
+			
+			console.log("hay "+res);
+
+			var data = {
+				labels: [
+					question.title
+				],
+				series: [
+					{
+						label: question.op1,
+						values: res[0]
+					},
+					{
+						label: question.op2,
+						values: res[1]
+					},
+					{
+						label: question.op3,
+						values: res[2]
+					},{
+						label: question.op4,
+						values: [3]
+					}]
+			};
+
+			this.modifyState("data",data);
+			this.modifyState("actualizando",false);
+
+		});
+
+		
 		console.log(question);
+		
+
+	}
+
+	renderChart(data)
+	{
 		return <GroupedHorizontalBarChart data = {data}/>;
 	}
 	
 
+
 	renderSur()
 	{
-		if(this.state.survey!==null )
+		if(this.state.survey!==null && this.state.data!==null)
 		{
-			return this.renderChart(this.state.survey.questions[this.state.numQuestion]);
+
+			return this.renderChart( this.state.data);
+		}
+		else if(this.state.survey!==null && !this.state.actualizando)
+		{
+			console.log("actualizando");
+			this.getData(this.state.survey.questions[this.state.numQuestion]);
 		}
 		return <div><h1>404</h1></div>;
 	}
