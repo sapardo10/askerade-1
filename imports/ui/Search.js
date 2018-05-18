@@ -7,15 +7,13 @@ import Surveyview from "./Surveyview.js";
 import Survey from "./Survey.js";
 import Result from "./Result.js";
 import RichTextEditor from "react-rte";
-
-
 import ColorSelect from "./ColorSelect.js";
 
 class Search extends Component 
 {	
 	constructor(props) {
 		super(props); 
-		let title = RichTextEditor.createValueFromString("markup", "html");
+		let title = RichTextEditor.createValueFromString("", "html");
 		this.state = {
 			colorSurvey: "#FFFFFF",
 			clear:false,
@@ -41,11 +39,9 @@ class Search extends Component
 
 	remove(event)
 	{
-		console.log("remove");
 		event.preventDefault();
 		let id= event.target.value;
 		Meteor.call("surveys.remove", id);
-
 	}
 
 
@@ -73,10 +69,12 @@ class Search extends Component
 
 	handleSubmit(event){
 		event.preventDefault();
-		const title = this.state.title.toString("html");
+		let  title = this.state.title.toString("html");
 		Meteor.call("surveys.create", title, this.state.surveyColor);
 		this.top.scrollIntoView({ behavior: "smooth" });
-		//this.modifyState("title","");
+		
+		title = RichTextEditor.createValueFromString("", "html");
+		this.modifyState("title",title);
 	}	
 
 	onChange(value) {
