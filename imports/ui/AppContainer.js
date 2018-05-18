@@ -33,9 +33,11 @@ class AppContainer extends Component {
 
 export default withTracker(() => {
 	Meteor.subscribe("surveys");
+	let owner= Meteor.userId();
+
 	return {
 		user: Meteor.user(),
-		surveys: Surveys.find({}, { sort: { createdAt: -1 } }).fetch(),
+		surveys: Surveys.find({owner}, { sort: { createdAt: -1 } }).fetch(),
 	};
 
 })(AppContainer);

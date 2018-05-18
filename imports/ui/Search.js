@@ -12,21 +12,17 @@ import Result from "./Result.js";
 
 import ColorSelect from "./ColorSelect.js";
 
-
-
 class Search extends Component 
 {	
-  constructor(props) {
+	constructor(props) {
+		super(props); 
+		this.state = {
+			redirect: false,
+			colorSurvey: "#FFFFFF",
+		};
+	}
 
-    super(props); 
-
-    this.state = {
-      redirect: false,
-      colorSurvey: "#FFFFFF",
-    };
-  }
-
-  modifyState(name,value)
+	modifyState(name,value)
 	{
 		this.setState(() => ({
 			[name]: value
@@ -37,10 +33,8 @@ class Search extends Component
 	{
 		event.preventDefault();
 		let index = event.target.attributes.getNamedItem("data-index").value;
-
 		this.modifyState("id", event.target.value);
 		this.modifyState("index", index);
-
 		this.modifyState("detail", true);
 	}
 
@@ -50,48 +44,40 @@ class Search extends Component
 		this.modifyState("id", event.target.value);
 		this.modifyState("result", true);
 		this.modifyState("detail", false);
-		console.log(event.target.attributes);
 		let index = event.target.attributes.getNamedItem("data-index").value;
 		this.modifyState("index", index);
 
 	}
 
-  renderSurveys() {
+	renderSurveys() {
+		return this.props.surveys.map((surveyview,i) => (
+			<Surveyview key={surveyview._id} survey={surveyview} details={this.details.bind(this)} index={i} />
+		));
+	}
 
+	handleSubmit(event){
+		event.preventDefault();
+		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
+		Meteor.call("surveys.create", title, this.state.surveyColor,(err,res)=>{
+			if(err)
+				throw err;
+			
+			ReactDOM.findDOMNode(this.refs.title).value = "";
+			this.setState({ url:"/survey/"+res,redirect: true });
+		});
 
-   return this.props.surveys.map((surveyview,i) => (
+		
+	}
 
-      <Surveyview key={surveyview._id} survey={surveyview} details={this.details.bind(this)} index={i} />
+	onChange(value) {
+		ReactDOM.findDOMNode(this.refs.title).value = value;
+	}
 
-    ));
-    
-  }
-
-  handleSubmit(event){
-
-    event.preventDefault();
-
-    const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
-
-    Meteor.call("surveys.create", title, this.state.surveyColor,(err,res)=>{
-      if(err)
-          throw err;
-        ReactDOM.findDOMNode(this.refs.title).value = "";
-        this.setState({ url:"/survey/"+res,redirect: true })
-    });
-
-    
-  }
-
-  onChange(value) {
-    ReactDOM.findDOMNode(this.refs.title).value = value;
-  }
-
-  onChangeColor(color) {
-    this.setState({
-      surveyColor: color.hex
-    });
-  }
+	onChangeColor(color) {
+		this.setState({
+			surveyColor: color.hex
+		});
+	}
 
 	render() {
 		if (this.state.redirect) {
@@ -108,51 +94,51 @@ class Search extends Component
 				survey={this.props.surveys[this.state.index]} 
 				id={this.state.id}/>;
 		}
-    return (
-      <div className="container">
+		return (
+			<div className="container">
 
-      <h1>Surveys done by you Yeahhh</h1>
+			<h1>Surveys done by you Yeahhh</h1>
 
-          <ul>
+					<ul>
 
-            {this.renderSurveys()}
+						{this.renderSurveys()}
 
-          </ul>
+					</ul>
 
-      { this.props.user ? (
-          <div>
-          <h2>Add a Survey!</h2>
-          <form className="new-question" onSubmit={this.handleSubmit.bind(this)}>
-            <div className="form-group">
-              <input
-                className="form-control"
-                type="text"
-                ref="title"
-                placeholder="Type the title of the Survey"
-                required
-                hidden
-              />
+			{ this.props.user ? (
+					<div>
+					<h2>Add a Survey!</h2>
+					<form className="new-question" onSubmit={this.handleSubmit.bind(this)}>
+						<div className="form-group">
+							<input
+								className="form-control"
+								type="text"
+								ref="title"
+								placeholder="Type the title of the Survey"
+								required
+								hidden
+							/>
 
-              <MyStatefulEditor onChange={this.onChange.bind(this)}/>            
-            </div>
-            
-            <ColorSelect 
-              color={this.state.colorSurvey} 
-              onChangeComplete={this.onChangeColor.bind(this)} 
-            />
+							<MyStatefulEditor onChange={this.onChange.bind(this)}/>            
+						</div>
+						
+						<ColorSelect 
+							color={this.state.colorSurvey} 
+							onChangeComplete={this.onChangeColor.bind(this)} 
+						/>
 
-            <input
-              className="btn btn-submit"
-              type="submit"
-              placeholder="Add question"
-            />
+						<input
+							className="btn btn-submit"
+							type="submit"
+							placeholder="Add question"
+						/>
 
-          </form></div>) : ""
-        }
+					</form></div>) : ""
+				}
 
-      </div>
-      );
-  }
+			</div>
+			);
+	}
 
 }
 
