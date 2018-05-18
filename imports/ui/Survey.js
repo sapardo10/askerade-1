@@ -391,7 +391,6 @@ class Survey extends Component
 	}
 	stop()
 	{
-		console.log("Stop");
 		Meteor.call("twitter.stop");
 	}
 	
@@ -445,9 +444,9 @@ class Survey extends Component
 				<div className="container new-question-form">
 					<h2 className="title-add-question"><strong>Add another question!</strong></h2>
 					<hr/>
-					{this.renderConfigQuestion()}
 					{this.renderTwitterButton()}
 					{this.renderQuestionFinder()}
+					{this.renderConfigQuestion()}
 
 					<form 
 						className="new-question"

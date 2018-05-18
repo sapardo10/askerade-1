@@ -30,10 +30,10 @@ export default class QuestionFinder extends Component {
 					type="submit"							
 				/>
 			</form>
-				<button
-					className="btn btn-danger"
-					onClick={this.props.stop}
-				>Stop</button>
+			<button
+				className="btn btn-danger"
+				onClick={this.props.stop}
+			>Stop</button>
 
 			<TweetsList
 				removeTweet={this.props.removeTweet}

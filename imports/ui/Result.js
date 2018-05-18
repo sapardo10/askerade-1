@@ -37,6 +37,12 @@ class Answer extends Component
 	{
 		this.updateSurvey();
 	}
+		modifyState(name,value)
+	{
+		this.setState(() => ({
+			[name]: value
+		}));
+	}
 
 
 
@@ -104,11 +110,49 @@ class Answer extends Component
 		}
 	}
 
+	prev()
+	{
+		this.modifyState("numQuestion",this.state.numQuestion-1);
+	}
+	next()
+	{
+		this.modifyState("numQuestion",this.state.numQuestion+1);
+	}
+
+	renderButtons()
+	{
+		return(
+			<div className="container">
+				<div className="row">
+					<div className="col-sm-6">
+						<button
+							onClick={this.prev.bind(this)}
+						>
+							&laquo; Previous
+						</button>
+					</div>
+					<div className="col-sm-6">
+						<button
+							onClick={this.next.bind(this)}
+						>
+							Next &raquo;
+						</button>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	renderSur()
 	{
 		if(this.state.survey!==null )
 		{
-			return this.renderViz(this.state.survey.questions[this.state.numQuestion]);
+			return (
+				<div>
+					{this.renderViz(this.state.survey.questions[this.state.numQuestion])}
+					{this.renderButtons()}
+				</div>
+			);
 		}
 		return <div><h1>404</h1></div>;
 	}
