@@ -83,7 +83,8 @@ class Survey extends Component
 		var question = {
 			title,
 			multiple,
-			_id
+			_id,
+			color
 		};
 
 
@@ -149,6 +150,15 @@ class Survey extends Component
 
 	fillFormQuestion(question)
 	{
+		let checkbox = ReactDOM.findDOMNode(this.refs.multiple);
+		console.log("pregunta: "+question.multiple);
+		console.log("estado: "+this.state.multiple);
+		console.log("estado: "+checkbox.checked);
+
+		if(question.multiple!==checkbox.checked)
+		{
+			checkbox.click();
+		}
 		this.fillForm(question.title, question.op1, question.op2, question.op3, question.op4);
 	}
 
