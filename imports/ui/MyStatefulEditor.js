@@ -21,6 +21,7 @@ export default class MyStatefulEditor extends Component {
         value.toString('html')
       );
     }
+
   };
 
   render () {

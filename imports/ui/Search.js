@@ -15,6 +15,7 @@ class Search extends Component
 		super(props); 
 		this.state = {
 			colorSurvey: "#FFFFFF",
+			clear:false,
 		};
 	}
 
@@ -54,14 +55,9 @@ class Search extends Component
 	handleSubmit(event){
 		event.preventDefault();
 		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
-		Meteor.call("surveys.create", title, this.state.surveyColor,(err,res)=>{
-			if(err)
-				throw err;
-			
-			ReactDOM.findDOMNode(this.refs.title).value = "";
-		});
+		Meteor.call("surveys.create", title, this.state.surveyColor);
+		this.modifyState("clear", true);
 
-		
 	}
 
 	onChange(value) {
@@ -106,7 +102,7 @@ class Search extends Component
 									hidden
 								/>
 
-								<MyStatefulEditor onChange={this.onChange.bind(this)}/>            
+								<MyStatefulEditor onChange={this.onChange.bind(this)} clear={this.state.clear}/>            
 							</div>
 							
 							<ColorSelect 
