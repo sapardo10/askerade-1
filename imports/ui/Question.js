@@ -96,6 +96,7 @@ export default class Question extends Component
 				</div>
 			);
 		}
+		/*
 		else if(!this.props.question.multiple && !this.props.answer) 
 		{
 			return <QuestionFinder
@@ -106,6 +107,7 @@ export default class Question extends Component
 				index={this.props.index}
 				handleSubmit={this.handleSubmit.bind(this)}/>;
 		}
+		*/
 		else if(this.props.answer)
 		{
 			return(
