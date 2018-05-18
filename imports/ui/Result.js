@@ -5,7 +5,7 @@ import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 import GroupedHorizontalBarChart from "./viz/GroupedHorizontalBarChart";
 
-
+import AnswerList from "./AnswerList";
 
 class Answer extends Component 
 {	
@@ -48,10 +48,15 @@ class Answer extends Component
 
 	renderViz(question)
 	{
-		if(question!=null)
+		if(question===null)
 		{
-			let s = this.props.survey||this.state.survey;
-			let answers=s.answers;
+			return <h2>No more questions  </h2>;
+		}
+
+		let s = this.props.survey||this.state.survey;
+		let answers=s.answers;
+		if(question.multiple )
+		{
 
 			let res=[0,0,0,0];
 
@@ -65,15 +70,15 @@ class Answer extends Component
 					{
 						res[0]++;
 					}
-					if(actual.value==="op2")
+					else if(actual.value==="op2")
 					{
 						res[1]++;
 					}
-					if(actual.value==="op3")
+					else if(actual.value==="op3")
 					{
 						res[2]++;
 					}
-					if(actual.value==="op4")
+					else if(actual.value==="op4")
 					{
 						res[3]++;
 					}
@@ -103,11 +108,25 @@ class Answer extends Component
 			};
 			return <GroupedHorizontalBarChart data = {data}/>;
 			
-		}  
-		else
-		{
-			return <h2>No more questions  </h2>;
 		}
+		else if(!question.multiple)
+		{
+			let realAnsers=[];
+			for(let i=0;i<answers.length;i++)
+			{
+				let actual = answers[i];
+				console.log(actual);
+				if(actual.question_id===question._id)
+				{
+					realAnsers.push(actual.value);
+				}
+			}
+			return <AnswerList
+				realAnswers={realAnsers}
+				question={question}
+			/>;
+		} 
+		
 	}
 
 	prev()
