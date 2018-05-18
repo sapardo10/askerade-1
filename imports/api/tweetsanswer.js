@@ -1,64 +1,55 @@
-import {Mongo} from "meteor/mongo";
+import Twitter from "twitter";
 import {Meteor} from "meteor/meteor";
-import {check} from "meteor/check";
+import { Mongo } from "meteor/mongo";
+// var Twitter = require("twitter");
 
-export const Tweets = new Mongo.Collection("Tweets");
+// TODO: Now we have only one stream overall,
+// we should have one per user at least
+let stream = null;
 
+// This is a in memory only collection
+export const Tweets = new Mongo.Collection("tweets");
+
+
+// Twitter streamer should run only on the server
 if (Meteor.isServer) {
-    Meteor.publish("Tweets", (codigo) => {
-        return Tweets.find(
-        				{query: codigo}, 
-        				{sort: {date: -1}, 
-        				limit: 5});
-    });
+  Meteor.publish("tweets", function tweetsPublication() {
+    return Tweets.find({}, {sort: {created_at: -1}, limit:10});
+  });
+
+  // This method will trigger the streamer
+  Meteor.methods({
+    "twitter.stream"(query,id) {
+      console.log("Twitter search" + query);
+
+      // Create the Twitter object
+      let client = new Twitter({
+        consumer_key:'8tt6uX5iqu1fVmBBMrkGCBMwL',
+        consumer_secret: 'QKjw2Wl1FQkKhqLExXQKhy9bCIplTEeV7ywkvhJ3O3rmg77nVJ',
+        access_token_key: '97156244-xqqkT9oBsulivxznBehM1V142MOvpirruZ3PylQX4',
+        access_token_secret: '0HiksTO0ECE2KgBfrClk08IrVISQfp3Y1yGszWyEeLHJL'
+            
+      });
+
+      if (stream) {
+        console.log("Stopping previous stream");
+        stream.destroy();
+        // Remove all the tweets
+        Tweets.remove({});
+      }
+
+      stream = client.stream("statuses/filter", {track: query});
+      stream.on("data", Meteor.bindEnvironment(function(tweet) {
+        // console.log(tweet.text);
+        // resolve(tweet);
+        tweet.questionId = id;
+        Tweets.insert(tweet);
+      }));
+
+      stream.on("error", function(error) {
+        console.log(error);
+        throw Meteor.Error(error);
+      });
+    }// twitter.stream
+  }); //Meteor.methods
 }
-
-Meteor.methods({
-    "tweets.stream"(codigo, idPregunta) {
-        check(codigo, String);
-        var Twit = require('twit')
-
-        var T = new Twit({
-            consumer_key: process.env.CONSUMER_KEY_TWITTER,
-            consumer_secret: process.env.CONSUMER_SECRET_TWITTER,
-            access_token_key: process.env.ACCESS_TOKEN_TWITTER,
-            access_token_secret: process.env.ACCESS_TOKEN_SECRET_TWITTER
-        });
-        /**
-         * Stream statuses filtered by keyword
-         * number of tweets per second depends on topic popularity
-         **/
-        var stream = T.stream("statuses/filter", {track: '#' + codigo});
-
-        stream.on("data", Meteor.bindEnvironment(function (data) {
-                // Construct a new tweet object
-                const date = moment(data["created_at"], 'dd MMM DD HH:mm:ss ZZ YYYY', 'en').format('MMMM Do YYYY, h:mm:ss a');
-                const tweet = {
-                    query: hashtag,
-                    twit: data["id"],
-                    author: data["user"]["name"],
-                    body: data["text"],
-                    date: date,
-                    idPregunta: idPregunta
-                };
-                Tweets.insert(tweet);
-
-            }));
-    },
-    "tweets.get"(codigo) {
-    	check(codigo, String);
-        var Twit = require('twit')
-
-        var T = new Twit({
-            consumer_key: process.env.CONSUMER_KEY_TWITTER,
-            consumer_secret: process.env.CONSUMER_SECRET_TWITTER,
-            access_token_key: process.env.ACCESS_TOKEN_TWITTER,
-            access_token_secret: process.env.ACCESS_TOKEN_SECRET_TWITTER
-        });
-
-        T.get('search/tweets', { q: '#'+codigo, count: 10 }, function(err, data, response) {
-		  console.log(data);
-		  return data;
-		})
-    }
-});

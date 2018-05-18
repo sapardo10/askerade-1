@@ -133,6 +133,7 @@ input:checked + .slider:before {
     border-style: solid;
     border-color: #000000;
     border-width: 1px;
+    margin-top: 10px;
 }
 
 form {
@@ -152,4 +153,7 @@ form {
 }
 button.btn-opcion:hover {
   background-color: #4A90E2;
+}
+.card {
+  margin-top:10px;
 }

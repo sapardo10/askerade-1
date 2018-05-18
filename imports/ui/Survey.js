@@ -147,7 +147,6 @@ class Survey extends Component
 
 	renderquestions(questions)
 	{
-		console.log(this.state.survey.color);
 		return questions.map((question,index) => {
 			return  <Question
 				editQuestion={this.editQuestion.bind(this)}

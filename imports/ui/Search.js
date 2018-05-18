@@ -88,7 +88,6 @@ class Search extends Component
   }
 
   onChangeColor(color) {
-    console.log(color.hex);
     this.setState({
       surveyColor: color.hex
     });
