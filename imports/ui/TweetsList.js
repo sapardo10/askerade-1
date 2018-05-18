@@ -15,6 +15,7 @@ export class TweetsList extends Component {
 				<Tweet
 					key={i}
 					tweet={tweet}
+					use={this.props.useTweet}
 				/>
 			);
 		});

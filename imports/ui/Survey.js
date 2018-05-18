@@ -266,6 +266,7 @@ class Survey extends Component
 	{
 		return(
 			<div className="row">
+
 				<div className="col-md-3" ></div>
 				<div className="col-md-3" >
 					<h3>Multiple choice</h3>
@@ -282,7 +283,9 @@ class Survey extends Component
 
 					</label>
 				</div>
-				<div className="col-md-3" ></div>
+				<div className="col-md-3" >
+					<button>Add from twitter</button>
+				</div>
 			</div>
 		);
 	}
