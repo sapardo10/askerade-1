@@ -36,7 +36,11 @@ class Search extends Component
 	details(event)
 	{
 		event.preventDefault();
+		let index = event.target.attributes.getNamedItem("data-index").value;
+
 		this.modifyState("id", event.target.value);
+		this.modifyState("index", index);
+
 		this.modifyState("detail", true);
 	}
 
@@ -46,16 +50,18 @@ class Search extends Component
 		this.modifyState("id", event.target.value);
 		this.modifyState("result", true);
 		this.modifyState("detail", false);
+		console.log(event.target.attributes);
+		let index = event.target.attributes.getNamedItem("data-index").value;
+		this.modifyState("index", index);
 
 	}
 
   renderSurveys() {
 
-    console.log(this.props.surveys);
 
-   return this.props.surveys.map((surveyview) => (
+   return this.props.surveys.map((surveyview,i) => (
 
-      <Surveyview key={surveyview._id} survey={surveyview} details={this.details.bind(this)} />
+      <Surveyview key={surveyview._id} survey={surveyview} details={this.details.bind(this)} index={i} />
 
     ));
     
@@ -88,17 +94,21 @@ class Search extends Component
     });
   }
 
-  render() {
-
-    if (this.state.redirect) {
-       return <Redirect to={this.state.url}/>;
-     }
-     if (this.state.detail) {
-       return <Survey id={this.state.id} results={this.results.bind(this)}/>;
-     }
-     if (this.state.result) {
-       return <Result id={this.state.id}/>;
-     }
+	render() {
+		if (this.state.redirect) {
+			return <Redirect to={this.state.url}/>;
+		}
+		if (this.state.detail) {
+			return <Survey
+				id={this.state.id} 
+				results={this.results.bind(this)} 
+				index={this.state.index}/>;
+		}
+		if (this.state.result) {
+			return <Result 
+				survey={this.props.surveys[this.state.index]} 
+				id={this.state.id}/>;
+		}
     return (
       <div className="container">
 
@@ -110,7 +120,6 @@ class Search extends Component
 
           </ul>
 
-        {console.log(JSON.stringify(this.props))}
       { this.props.user ? (
           <div>
           <h2>Add a Survey!</h2>

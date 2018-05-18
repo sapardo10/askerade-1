@@ -181,6 +181,7 @@ class Survey extends Component
 		return( 
 			<button 
 				onClick={this.props.results}
+				data-index={this.props.index}
 				value={this.id}
 				className="btn btn-primary"
 			>

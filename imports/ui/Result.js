@@ -1,119 +1,3 @@
-/*import React, { Component } from "react";
-import GroupedHorizontalBarChart from "./viz/GroupedHorizontalBarChart";
-export default class Result extends Component {
-	constructor(props) {
-		super(props); 
-		this.state = {
-			survey: null,
-			data:null,
-			numQuestion:0,
-		};
-	}
-	getData(question,survey){
-
-		console.log("renderChart");
-		Meteor.call("survey.countAnswers",survey._id,(err,res)=>{
-			if(err)
-				throw err;
-			
-			console.log("hay "+res[0]);
-			console.log("hay "+res[1]);
-			console.log("hay "+res[2]);
-			console.log("hay "+res[3]);
-
-			var data = {
-				labels: [
-					question.title
-				],
-				series: [
-					{
-						label: question.op1,
-						values: [res[0]]
-					},
-					{
-						label: question.op2,
-						values: [res[1]]
-					},
-					{
-						label: question.op3,
-						values: [res[2]]
-					},{
-						label: question.op4,
-						values: [res[3]]
-					}]
-			};
-
-			this.modifyState("data",data);
-
-		});
-
-		
-		console.log(question);
-		
-
-	}
-
-	renderChart(data)
-	{
-		return <GroupedHorizontalBarChart data = {data}/>;
-	}
-	
-
-
-	renderSur()
-	{
-		if(this.state.survey!==null && this.state.data!==null)
-		{
-
-			return this.renderChart( this.state.data);
-		}
-		return <div><h1>404</h1></div>;
-	}
-
-	render()
-	{
-		return(this.renderSur());
-	}
-	componentDidMount()
-	{
-		this.updateSurvey();
-	}
-
-	componentWillMount()
-	{
-
-	}
-
-	modifyState(name,value)
-	{
-		this.setState(() => ({
-			[name]: value
-		}));
-	}
-
-	updateSurvey()
-	{
-		this.id = this.props.id || this.props.match.params.number;
-		Meteor.call("surveys.get", this.id,(err,res)=>{
-			if(err)
-				throw err;
-			
-			this.getData(res.questions[this.state.numQuestion],res);
-
-			let answers = res.answers;
-
-			for(let i =0;i<answers.length;i++)
-			{
-				console.log(answers[i]);
-			}
-
-			this.modifyState("survey",res);
-
-
-		});
-	}
-}
-*/
 import React, { Component } from "react";
 import { Surveys } from "../api/surveys.js";
 import ReactDOM from "react-dom";
@@ -158,10 +42,10 @@ class Answer extends Component
 
 	renderViz(question)
 	{
-      
 		if(question!=null)
 		{
-			let answers=this.state.survey.answers;
+			let s = this.props.survey||this.state.survey;
+			let answers=s.answers;
 
 			let res=[0,0,0,0];
 

@@ -25,7 +25,7 @@ export default class StackedBarChart extends Component {
 
 	componentWillUpdate(newProps)
 	{
-		
+		console.log();
 		this.update(newProps);
 	}
 
@@ -33,9 +33,13 @@ export default class StackedBarChart extends Component {
 	{
 		if(!props.data)return;
 		console.log("update");
+		d3.selectAll("svg > *").remove();
 
 		let data = props.data;
-		console.log(data);
+		for(let i = 0;i<4;i++)
+		{
+			console.log(data.series[i].values[0]);
+		}
 
 		this.groupHeight = this.barHeight * data.series.length;
 
@@ -68,7 +72,7 @@ export default class StackedBarChart extends Component {
 
 		var chart = d3.select(".chart")
 			.attr("width", this.spaceForLabels + this.chartWidth + this.spaceForLegend)
-			.attr("height", 1000);
+			.attr("height", chartHeight);
 
 			
 
@@ -152,14 +156,7 @@ export default class StackedBarChart extends Component {
 			.attr("y", legendRectSize - legendSpacing)
 			.text(function (d) { return d.label; });
 
-		chart.append("foreignObject")
-			.attr("y", 500)
-			.attr("width", 480)
-			.attr("height", 500)
-			.append("xhtml:body")
-			.style("font", "14px 'Helvetica Neue'")
-			.html("<h1>An HTML Foreign Object in SVG</h1><p>Lorem ipsum dolor sit amet");
-			
+	
 
 
 	}

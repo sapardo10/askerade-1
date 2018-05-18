@@ -8,6 +8,7 @@ export default class Surveyview extends Component {
 	constructor(props)
 	{
 		super(props);
+		console.log("INDEX:"+props.index);
 
 		this.state = {
 
@@ -29,6 +30,7 @@ export default class Surveyview extends Component {
 
 				<button 
 					value={this.props.survey._id}
+					data-index={this.props.index}
 					className="btn btn-primary"
 					onClick={this.props.details}
 				>Details
