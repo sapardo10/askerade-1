@@ -27,6 +27,7 @@
     "react-rte": "^0.16.1",
     "react-select": "^1.2.1",
     "sinon": "^4.5.0",
-    "sweetalert": "^2.1.0"
+    "sweetalert": "^2.1.0",
+    "twit": "^2.2.9"
   }
 }

@@ -15,7 +15,8 @@ class Survey extends Component
 		this.state = {
 			survey: null,
 			editting:null,
-			multiple:true
+			multiple:true,
+			tweets:[]
 		};
 	}
 
@@ -98,12 +99,10 @@ class Survey extends Component
 			};
 		}
 
-		console.log(question);
 
 
 		if(this.state.editting!==null)
 		{
-			console.log("no es null");
 			Meteor.call("surveys.updateQuestion", this.state.survey._id,question,(err,res)=>{
 				if(err)
 					throw err;
@@ -116,11 +115,9 @@ class Survey extends Component
 		}
 		else
 		{
-			console.log("es null "+" survey "+this.state.survey._id+" question "+question.title);
 			Meteor.call("surveys.addQuestion", this.state.survey._id,question,(err,res)=>{
 				if(err)
 					throw err;
-				console.log("NO ERROR");
 				this.fillForm("","","","","","");
 
 				this.updateSurvey();
@@ -182,6 +179,7 @@ class Survey extends Component
 			<button 
 				onClick={this.props.results}
 				value={this.id}
+				className="btn btn-primary"
 			>
 			Results
 			</button>
@@ -206,6 +204,7 @@ class Survey extends Component
 			<button 
 				onClick={this.share.bind(this)}
 				value={this.id}
+				className="btn btn-primary"
 			>
 			Share
 			</button>
@@ -254,6 +253,7 @@ class Survey extends Component
 		);
 	}
 
+
 	renderConfigQuestion()
 	{
 		return(
@@ -271,6 +271,7 @@ class Survey extends Component
 							defaultChecked
 						/>
 						<span className="slider round"></span>
+
 					</label>
 				</div>
 				<div className="col-md-3" ></div>
@@ -284,6 +285,7 @@ class Survey extends Component
 		{
 			return(
 				<div className="container">
+					<h2>Answers:</h2>
 					<div className="row" >
 						<div className="col-md-6 border" >
 							<div className="form-group">
@@ -342,11 +344,13 @@ class Survey extends Component
 		if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
 		{
 			const q = this.state.survey.questions;
-			return<div className="container" style={{"backgroundColor": this.state.survey.color}}>
+			return<div className="container survey-cont" style={{"backgroundColor": this.state.survey.color}}>
 				{renderHTML(this.state.survey.title)}
 				<br/>
 				{this.rendeResultsButton()}
 				{this.rendeShareButton()}
+				<br/>
+				<br/>
 				{this.renderConfigMenu()}
 
 				{this.renderquestions(q)}
@@ -354,41 +358,45 @@ class Survey extends Component
 				<br/>
 				<br/>
 				<br/>
+				<div className="container new-question-form">
+				<h2 className="title-add-question"><strong>Add another question!</strong></h2>
+					<hr/>
+					{this.renderConfigQuestion()}
+					<form 
+						className="new-question"
+						ref={(el) => { this.messagesEnd = el; }}
+						onSubmit={this.handleSubmit.bind(this)}>
+						<div className="card mx-auto"  >
+							<div className="card-body" >
 
-				<form 
-					className="new-question"
-					ref={(el) => { this.messagesEnd = el; }}
-					onSubmit={this.handleSubmit.bind(this)}>
-					<div className="card mx-auto"  >
-						<div className="card-body" >
+								<div className="form-group card-title">
+									<input
+										className="form-control text-center"
+										type="text"
+										ref="title"
+										placeholder="Type the question"
+										required
+										hidden
+									/> 
+									<h2>Question:</h2>       
+									<MyStatefulEditor onChange={this.onChange.bind(this)}/>    
+								</div>
 
-							<div className="form-group card-title">
-								<input
-									className="form-control text-center"
-									type="text"
-									ref="title"
-									placeholder="Type the question"
-									required
-									hidden
-								/>        
-								<MyStatefulEditor onChange={this.onChange.bind(this)}/>    
+								
+
+								{this.renderOptions()}
+
+								
 							</div>
-
-							{this.renderConfigQuestion()}
-
-							{this.renderOptions()}
-
-							
 						</div>
-					</div>
 
-					<input
-						className="btn btn-submit"
-						type="submit"
-						value={this.state.editting?"Update question":"Add question"}
-					/>
-
-				</form>  
+						<input
+							className="btn btn-submit btn-add-question"
+							type="submit"
+							value={this.state.editting?"Update question":"Add question"}
+						/>
+					</form>  
+				</div>
 			</div>;
 		}
 		return <div>404</div>;

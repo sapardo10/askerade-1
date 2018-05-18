@@ -6,10 +6,10 @@ class Question extends Component
 	render()
 	{
 		return (
-			<div className="card mx-auto"  style={{"backgroundColor": this.props.question.color}}>
+			<div className="card mx-auto question-cont"  >
 				<div className="card-body" >
 					<div className="card-title" >{renderHTML(this.props.question.title)} </div>
-					<div className="container">
+					<div className="container" style={{"backgroundColor": this.props.question.color}}>
 						{this.renderOptions()}
 						
 					</div>
@@ -21,7 +21,13 @@ class Question extends Component
 	{
 		return(
 			<div className="col-md-6 border" >
-				<button onClick={this.props.registerAnswer} type="button" value={label}>{option}</button>
+				<button 
+					className="btn btn-primary"
+					onClick={this.props.registerAnswer} 
+					type="button" 
+					value={label}>
+						{option}
+					</button>
 			</div>
 		);
 	}
@@ -32,27 +38,30 @@ class Question extends Component
 			return(
 				<div>
 					<div className="row" >
-						<div className="col-md-6 border" >{this.props.question.op1}</div>
-						<div className="col-md-6 border" >{this.props.question.op2}</div>
+						<div className="col-md-6 list-group-item list-group-item-action" >{this.props.question.op1}</div>
+						<div className="col-md-6 list-group-item list-group-item-action" >{this.props.question.op2}</div>
 					</div>
 					<div className="row" >
-						<div className="col-md-6 border" >{this.props.question.op3}</div>
-						<div className="col-md-6 border" >{this.props.question.op4}</div>
+						<div className="col-md-6 list-group-item list-group-item-action" >{this.props.question.op3}</div>
+						<div className="col-md-6 list-group-item list-group-item-action" >{this.props.question.op4}</div>
 					</div>
+					<br/>
 					<div className="row" >
-						<div className="col-md-6 border" >
+					<div className="col-md-4"> </div>
+						<div className="col-md-2 " >
 							<button
 								value={this.props.index}
 								onClick={this.props.removeQuestion} 
-								className="btn-primary">
-								remove</button></div>
-						<div className="col-md-6 border" >
+								className="btn btn-danger">
+								Remove</button></div>
+						<div className="col-md-2" >
 							<button
 								value={this.props.index}
 								onClick={this.props.editQuestion} 
-								className="btn-primary">
-								edit</button></div>
+								className="btn btn-primary">
+								 Edit </button></div>
 					</div>
+
 				</div>
 			);
 		}
@@ -71,6 +80,44 @@ class Question extends Component
 					</div>
 				</div>
 			);
+		}
+		else if(!this.props.question.multiple && !this.props.answer) 
+		{
+			return (<form 
+					className="form-group">
+					<div className="form-row">
+						<label>Ingresa el termino de busqueda</label>
+						<input
+							className="form-control"
+							ref="tweet"
+							type="text"
+							placeholder="Ingresa el hashtag a buscar"
+							/>
+					</div>
+						<input 
+							className="btn btn-submit"
+							type="submit"							
+						/>
+
+
+					<div className="row" >
+					<div className="col-md-4"> </div>
+						<div className="col-md-2 " >
+							<button
+								value={this.props.index}
+								onClick={this.props.removeQuestion} 
+								className="btn btn-danger">
+								Remove</button></div>
+						<div className="col-md-2" >
+							<button
+								value={this.props.index}
+								onClick={this.props.editQuestion} 
+								className="btn btn-primary">
+								 Edit </button></div>
+					</div>
+
+							
+				</form>);
 		}
 		else if(this.props.answer)
 		{

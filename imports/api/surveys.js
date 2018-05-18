@@ -59,6 +59,10 @@ Meteor.methods({
 		}
 		return Surveys.update({_id},{$push:{questions: question}});
 	},
+	"surveys.addTweetStream"(_id, codigo){
+		check(_id, String);
+		return Surveys.update({_id},{$push:{codigo: codigo}});
+	},
 
 	"surveys.addAnswerToQuestion"(_id,  answer) {
 		check(_id, String);
