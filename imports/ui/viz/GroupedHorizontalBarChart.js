@@ -68,7 +68,7 @@ export default class StackedBarChart extends Component {
 
 		var chart = d3.select(".chart")
 			.attr("width", this.spaceForLabels + this.chartWidth + this.spaceForLegend)
-			.attr("height", chartHeight);
+			.attr("height", 1000);
 
 			
 
@@ -99,13 +99,15 @@ export default class StackedBarChart extends Component {
 			.attr("dy", ".35em")
 			.html(function(d) { return d; });
 
-		// Draw labels
-		bar.append("text")
-			.attr("class", "label")
-			.attr("x", function(d) { return - 10; })
-			.attr("y", this.groupHeight / 2)
-			.attr("dy", ".35em")
-			.text(function(d,i) {
+		//From https://bl.ocks.org/mbostock/1424037
+		chart.append("foreignObject")
+			.attr("y", 0)
+			.attr("x", 0)
+			.attr("width", 150)
+			.attr("height", 100)
+			.append("xhtml:body")
+			.style("font", "16px 'Helvetica Neue'")
+			.html(function(d,i) {
 				if (i % data.series.length === 0)
 					return data.labels[Math.floor(i/data.series.length)];
 				else
@@ -150,6 +152,13 @@ export default class StackedBarChart extends Component {
 			.attr("y", legendRectSize - legendSpacing)
 			.text(function (d) { return d.label; });
 
+		chart.append("foreignObject")
+			.attr("y", 500)
+			.attr("width", 480)
+			.attr("height", 500)
+			.append("xhtml:body")
+			.style("font", "14px 'Helvetica Neue'")
+			.html("<h1>An HTML Foreign Object in SVG</h1><p>Lorem ipsum dolor sit amet");
 			
 
 
