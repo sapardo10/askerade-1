@@ -46,9 +46,31 @@ export default class Question extends Component
 			</div>
 		);
 	}
-	renderOptions()
+	renderButtons()
 	{
-		if(this.props.question.multiple && !this.props.answer)
+		return(
+			<div className="row" >
+				<br/>
+				<div className="col-md-4"> </div>
+				<div className="col-md-2 " >
+					<button
+						value={this.props.index}
+						onClick={this.props.removeQuestion} 
+						className="btn btn-danger">
+						Remove</button></div>
+				<div className="col-md-2" >
+					<button
+						value={this.props.index}
+						onClick={this.props.editQuestion} 
+						className="btn btn-primary">
+						Edit </button></div>
+			</div>
+		);
+	}
+
+	renderQuestion()
+	{
+		if(this.props.question.multiple)
 		{
 			return(
 				<div>
@@ -60,22 +82,19 @@ export default class Question extends Component
 						<div className="col-md-6 list-group-item list-group-item-action" >{this.props.question.op3}</div>
 						<div className="col-md-6 list-group-item list-group-item-action" >{this.props.question.op4}</div>
 					</div>
-					<br/>
-					<div className="row" >
-						<div className="col-md-4"> </div>
-						<div className="col-md-2 " >
-							<button
-								value={this.props.index}
-								onClick={this.props.removeQuestion} 
-								className="btn btn-danger">
-								Remove</button></div>
-						<div className="col-md-2" >
-							<button
-								value={this.props.index}
-								onClick={this.props.editQuestion} 
-								className="btn btn-primary">
-								Edit </button></div>
-					</div>
+				</div>
+			);
+		}
+	}
+
+	renderOptions()
+	{
+		if(!this.props.answer)
+		{
+			return(
+				<div>
+					
+					{this.renderButtons()}
 
 				</div>
 			);
@@ -96,18 +115,7 @@ export default class Question extends Component
 				</div>
 			);
 		}
-		/*
-		else if(!this.props.question.multiple && !this.props.answer) 
-		{
-			return <QuestionFinder
-				use={this.props.useTweet}
-				tweets={this.props.tweets}
-				editQuestion={this.props.editQuestion} 
-				removeQuestion={this.props.removeQuestion} 
-				index={this.props.index}
-				handleSubmit={this.handleSubmit.bind(this)}/>;
-		}
-		*/
+
 		else if(this.props.answer)
 		{
 			return(
