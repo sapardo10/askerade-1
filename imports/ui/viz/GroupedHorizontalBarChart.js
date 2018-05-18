@@ -5,7 +5,6 @@ export default class StackedBarChart extends Component {
 	constructor(props)
 	{
 		super(props);
-		this.margin = {top: 20, right: 20, bottom: 30, left: 40};
 	}
 
 	componentDidMount()
