@@ -15,6 +15,13 @@ export class Tweet extends Component {
 					>
 						Use
 					</button>
+					<button
+						className="btn btn-danger"
+						onClick={this.props.removeTweet}
+						value={this.props.tweet._id}
+					>
+						Remove
+					</button>
 				</div>
 			</div>
 		);

@@ -5,6 +5,8 @@ import { Meteor } from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
 
 import { Surveys } from "../api/surveys.js";
+import { Tweets } from "../api/tweetsanswer.js";
+
 
 import Header from "./Header";
 import Search from "./Search";
@@ -19,7 +21,8 @@ class AppContainer extends Component {
 				<Header />
 				<main>
 					<Switch>
-						<Route exact path="/" render={()=><Search 
+						<Route exact path="/" render={()=><Search
+							tweets={this.props.tweets} 
 							user={this.props.user} 
 							surveys={this.props.surveys}/>}/>
 						<Route path="/survey/:number" component={Survey}/>
@@ -33,11 +36,15 @@ class AppContainer extends Component {
 
 export default withTracker(() => {
 	Meteor.subscribe("surveys");
+	Meteor.subscribe("tweets");
+
 	let owner= Meteor.userId();
 
 	return {
 		user: Meteor.user(),
 		surveys: Surveys.find({owner}, { sort: { createdAt: -1 } }).fetch(),
+		tweets: Tweets.find({}, {sort: {date: -1}, limit: 4}).fetch(),
+
 	};
 
 })(AppContainer);

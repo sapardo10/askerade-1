@@ -8,14 +8,14 @@ export class TweetsList extends Component {
 	}
 
 	renderList() {
-
 		return this.props.tweets.map((tweet,i) => {
 
 			return (
 				<Tweet
+					removeTweet={this.props.removeTweet}
 					key={i}
 					tweet={tweet}
-					use={this.props.useTweet}
+					useTweet={this.props.useTweet}
 				/>
 			);
 		});

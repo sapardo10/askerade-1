@@ -1,12 +1,20 @@
 import React, { Component } from "react";
 import { TweetsList } from "./TweetsList.js";
+import ReactDOM from "react-dom";
 
 
 export default class QuestionFinder extends Component {
+	handleSubmit(event)
+	{
+		event.preventDefault();
+		const codigo = ReactDOM.findDOMNode(this.refs.tweet).value.trim();
+		console.log(codigo);
+		this.props.handleSubmit(codigo);
+	}
 	render() {
 		return (<div>
 			<form 
-				onSubmit={this.props.handleSubmit}
+				onSubmit={this.handleSubmit.bind(this)}
 				className="form-group">
 				<div className="form-row">
 					<label>Ingresa el termino de busqueda</label>
@@ -21,29 +29,11 @@ export default class QuestionFinder extends Component {
 					className="btn btn-submit"
 					type="submit"							
 				/>
-
-
-				<div className="row" >
-					<div className="col-md-4"> </div>
-					<div className="col-md-2 " >
-						<button
-							value={this.props.index}
-							onClick={this.props.removeQuestion} 
-							className="btn btn-danger">
-							Remove</button></div>
-					<div className="col-md-2" >
-						<button
-							value={this.props.index}
-							onClick={this.props.editQuestion} 
-							className="btn btn-primary">
-							Edit </button></div>
-				</div>
-
-					
 			</form>
 
 			<TweetsList
-				use={this.props.useTweet}
+				removeTweet={this.props.removeTweet}
+				useTweet={this.props.useTweet}
 				tweets={this.props.tweets}
 			/>
 		</div>);

@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import renderHTML from "react-render-html";
 import { Meteor } from "meteor/meteor";
-import { Tweets } from "../api/tweetsanswer.js";
 import {PropTypes} from "prop-types";
 
 import { withTracker } from "meteor/react-meteor-data";
 import QuestionFinder  from "./QuestionFinder.js";
 
 
-class Question extends Component 
+export default class Question extends Component 
 {
 	constructor(props){
 		super(props);
@@ -17,11 +16,7 @@ class Question extends Component
 			tweets:[],
 		};
 	}
-	handleSubmit(event){
-		event.preventDefault();
-		const codigo = ReactDOM.findDOMNode(this.refs.tweet).value.trim();
-		Meteor.call("twitter.stream",codigo,this.props.question._id);
-	}
+	
 
 	render()
 	{
@@ -142,9 +137,3 @@ class Question extends Component
 		}
 	}	
 }
-export default withTracker(() => {
-  Meteor.subscribe("tweets");
-  return {
-    tweets: Tweets.find({}, {sort: {date: -1}, limit: 4}).fetch(),
-};
-})(Question);

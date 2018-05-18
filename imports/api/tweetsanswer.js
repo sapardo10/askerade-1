@@ -1,6 +1,8 @@
 import Twitter from "twitter";
 import {Meteor} from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
+import { check } from "meteor/check";
+
 
 // TODO: Now we have only one stream overall,
 // we should have one per user at least
@@ -18,7 +20,11 @@ if (Meteor.isServer) {
 
 	// This method will trigger the streamer
 	Meteor.methods({
-		"twitter.stream"(query,id) {
+		"twitter.remove"(_id) {
+			check(_id, String);
+			Tweets.remove({_id});
+		},
+		"twitter.stream"(query) {
 			console.log("Twitter search " + query);
 
 			// Create the Twitter object
@@ -39,17 +45,13 @@ if (Meteor.isServer) {
 
 			stream = client.stream("statuses/filter", {track: query});
 			stream.on("data", Meteor.bindEnvironment(function(tweet) {
-				console.log(JSON.stringify(tweet));
-				console.log();
-        // resolve(tweet);
-        tweet.questionId = id;
-        Tweets.insert(tweet);
-      }));
+				Tweets.insert(tweet);
+			}));
 
-      stream.on("error", function(error) {
-        console.log(error);
-        throw Meteor.Error(error);
-      });
-    }// twitter.stream
-  }); //Meteor.methods
+			stream.on("error", function(error) {
+				console.log(error);
+				throw Meteor.Error(error);
+			});
+		}// twitter.stream
+	}); //Meteor.methods
 }

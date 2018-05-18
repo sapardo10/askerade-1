@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Meteor } from "meteor/meteor";
 import Question from "./Question.js";
+import QuestionFinder from "./QuestionFinder.js";
+
 import swal from "sweetalert";
 import renderHTML from "react-render-html";
 import MyStatefulEditor from "./MyStatefulEditor.js";
 import RichTextEditor from "react-rte";
+
 
 class Survey extends Component 
 {	
@@ -17,7 +20,8 @@ class Survey extends Component
 			editting:null,
 			multiple:true,
 			tweets:[],
-			title
+			title,
+			twitter:false,
 		};
 	}
 
@@ -242,6 +246,26 @@ class Survey extends Component
 		}
 	}
 
+	onTwitterClick()
+	{
+		this.modifyState("twitter",true);
+	}
+	
+
+	renderTwitterButton()
+	{
+		console.log("renderTwitterButton");
+		return(
+			<div className="row">
+				<div className="col-md-12" >
+					<button
+					onClick={this.onTwitterClick.bind(this)}
+					>Add from twitter</button>
+				</div>
+			</div>
+		);
+	}
+
 	renderConfigMenu()
 	{
 		return(
@@ -284,7 +308,7 @@ class Survey extends Component
 					</label>
 				</div>
 				<div className="col-md-3" >
-					<button>Add from twitter</button>
+
 				</div>
 			</div>
 		);
@@ -351,6 +375,39 @@ class Survey extends Component
 		ReactDOM.findDOMNode(this.refs.title).value = value.toString("html");
 	}
 
+	renderQuestionFinder()
+	{
+		if(this.state.twitter)
+		{
+			return <QuestionFinder
+				removeTweet={this.removeTweet.bind(this)}
+				useTweet={this.useTweet.bind(this)}
+				tweets={this.props.tweets}
+				index={0}
+				handleSubmit={this.handleTwitterSearch.bind(this)}/>;
+		}
+
+	}
+	
+	removeTweet(event)
+	{
+		event.preventDefault();
+		let id =event.target.value;
+		Meteor.call("twitter.remove",id);
+
+	}
+	useTweet(event)
+	{
+		event.preventDefault();
+		let tweet =event.target.value;
+		this.fillForm(tweet,"","","","","");
+		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	}
+
+	handleTwitterSearch(codigo){
+		Meteor.call("twitter.stream",codigo);
+	}
+
 	renderSur()
 	{
 		if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
@@ -383,6 +440,9 @@ class Survey extends Component
 					<h2 className="title-add-question"><strong>Add another question!</strong></h2>
 					<hr/>
 					{this.renderConfigQuestion()}
+					{this.renderTwitterButton()}
+					{this.renderQuestionFinder()}
+
 					<form 
 						className="new-question"
 						ref={(el) => { this.messagesEnd = el; }}

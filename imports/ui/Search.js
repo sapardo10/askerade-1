@@ -91,6 +91,7 @@ class Search extends Component
 	render() {
 		if (this.state.detail) {
 			return <Survey
+				tweets={this.props.tweets}
 				id={this.state.id} 
 				results={this.results.bind(this)} 
 				index={this.state.index}/>;
