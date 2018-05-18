@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import ReactDOM from "react-dom";
-import { Session } from "meteor/session";
 import { DDPRateLimiter } from "meteor/ddp-rate-limiter";
 import { Redirect } from "react-router-dom";
 import { Surveys } from "../api/surveys.js";
