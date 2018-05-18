@@ -93,7 +93,7 @@ export default class Question extends Component
 		{
 			return(
 				<div>
-					
+					{this.renderQuestion()}
 					{this.renderButtons()}
 
 				</div>
