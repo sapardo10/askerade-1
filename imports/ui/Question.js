@@ -1,8 +1,36 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import renderHTML from 'react-render-html';
+import { Meteor } from "meteor/meteor";
+import { Tweets } from "../api/tweetsanswer.js";
+import { TweetsList } from "./TweetsList.js";
+import {PropTypes} from "prop-types";
+
+import { withTracker } from 'meteor/react-meteor-data';
 
 class Question extends Component 
 {
+
+	constructor(props){
+		super(props);
+
+		this.state={
+
+			tweets:[],
+
+		};
+	}
+
+	handleSubmit(event){
+
+		event.preventDefault();
+
+        const codigo = ReactDOM.findDOMNode(this.refs.tweet).value.trim();
+
+		Meteor.call('twitter.stream',codigo,this.props.question._id);
+
+	}
+
 	render()
 	{
 		return (
@@ -11,8 +39,9 @@ class Question extends Component
 					<div className="card-title" >{renderHTML(this.props.question.title)} </div>
 					<div className="container" >
 						{this.renderOptions()}
-						
 					</div>
+					
+
 				</div>
 			</div>
 		);  
@@ -84,41 +113,48 @@ class Question extends Component
 		}
 		else if(!this.props.question.multiple && !this.props.answer) 
 		{
-			return (<form 
-					className="form-group">
-					<div className="form-row">
-						<label>Ingresa el termino de busqueda</label>
-						<input
-							className="form-control"
-							ref="tweet"
-							type="text"
-							placeholder="Ingresa el hashtag a buscar"
-							/>
-					</div>
-						<input 
-							className="btn btn-submit"
-							type="submit"							
-						/>
+			return (<div>
+						<form 
+							onSubmit={this.handleSubmit.bind(this)}
+							className="form-group">
+							<div className="form-row">
+								<label>Ingresa el termino de busqueda</label>
+								<input
+									className="form-control"
+									ref="tweet"
+									type="text"
+									placeholder="Ingresa el hashtag a buscar"
+									/>
+							</div>
+								<input 
+									className="btn btn-submit"
+									type="submit"							
+								/>
 
 
-					<div className="row" >
-					<div className="col-md-4"> </div>
-						<div className="col-md-2 " >
-							<button
-								value={this.props.index}
-								onClick={this.props.removeQuestion} 
-								className="btn btn-danger">
-								Remove</button></div>
-						<div className="col-md-2" >
-							<button
-								value={this.props.index}
-								onClick={this.props.editQuestion} 
-								className="btn btn-primary">
-								 Edit </button></div>
-					</div>
+						<div className="row" >
+						<div className="col-md-4"> </div>
+							<div className="col-md-2 " >
+								<button
+									value={this.props.index}
+									onClick={this.props.removeQuestion} 
+									className="btn btn-danger">
+									Remove</button></div>
+							<div className="col-md-2" >
+								<button
+									value={this.props.index}
+									onClick={this.props.editQuestion} 
+									className="btn btn-primary">
+									 Edit </button></div>
+						</div>
 
-							
-				</form>);
+								
+					</form>
+
+					<TweetsList
+						tweets={this.props.tweets}
+					/>
+				</div>);
 		}
 		else if(this.props.answer)
 		{
@@ -151,4 +187,9 @@ class Question extends Component
 		}
 	}	
 }
-export default Question;
+export default withTracker(() => {
+  Meteor.subscribe('tweets');
+  return {
+    tweets: Tweets.find({}, {sort: {date: -1}, limit: 4}).fetch(),
+};
+})(Question);

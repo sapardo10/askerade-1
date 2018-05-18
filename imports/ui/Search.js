@@ -51,7 +51,6 @@ class Search extends Component
 
   renderSurveys() {
 
-    console.log(this.props.surveys);
 
    return this.props.surveys.map((surveyview) => (
 
@@ -82,7 +81,6 @@ class Search extends Component
   }
 
   onChangeColor(color) {
-    console.log(color.hex);
     this.setState({
       surveyColor: color.hex
     });
@@ -110,7 +108,6 @@ class Search extends Component
 
           </ul>
 
-        {console.log(JSON.stringify(this.props))}
       { this.props.user ? (
           <div>
           <h2>Add a Survey!</h2>
