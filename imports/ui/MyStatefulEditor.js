@@ -26,6 +26,7 @@ export default class MyStatefulEditor extends Component {
   render () {
     return (
       <RichTextEditor
+        placeholder="Type the title"
         value={this.state.value}
         onChange={this.onChange}
       />

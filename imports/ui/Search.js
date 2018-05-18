@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import ReactDOM from "react-dom";
-import { DDPRateLimiter } from "meteor/ddp-rate-limiter";
-import { Redirect } from "react-router-dom";
 import { Surveys } from "../api/surveys.js";
 import MyStatefulEditor from "./MyStatefulEditor.js";
 import Surveyview from "./Surveyview.js";
@@ -16,7 +14,6 @@ class Search extends Component
 	constructor(props) {
 		super(props); 
 		this.state = {
-			redirect: false,
 			colorSurvey: "#FFFFFF",
 		};
 	}
@@ -62,7 +59,6 @@ class Search extends Component
 				throw err;
 			
 			ReactDOM.findDOMNode(this.refs.title).value = "";
-			this.setState({ url:"/survey/"+res,redirect: true });
 		});
 
 		
@@ -79,9 +75,6 @@ class Search extends Component
 	}
 
 	render() {
-		if (this.state.redirect) {
-			return <Redirect to={this.state.url}/>;
-		}
 		if (this.state.detail) {
 			return <Survey
 				id={this.state.id} 
