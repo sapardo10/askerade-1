@@ -25,15 +25,6 @@ class Search extends Component
       colorSurvey: "#FFFFFF",
     };
   }
-  
-  componentDidMount(){
-    Session.setDefault("searchValue", "");
-    Session.set("searchValue", "");
-  }
-	someFunction(){
-        let params = queryString.parse(this.props.location.search);
-        //console.log(params);
-  }
 
   modifyState(name,value)
 	{

@@ -29,17 +29,10 @@ export default class Surveyview extends Component {
 
 				<button 
 					value={this.props.survey._id}
-					className="btn btn-details"
+					className="btn btn-primary"
 					onClick={this.props.details}
 				>Details
 				</button>
-
-				<br/>
-
-				{this.state.showDetails?(
-					<Donut survey={this.props.survey}/>)
-					:
-					"Nada"}
 
 			</li>
 

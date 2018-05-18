@@ -11,6 +11,62 @@ if (Meteor.isServer) {
 	});
 }
 
+if (Meteor.isServer) {
+  DDPRateLimiter.setErrorMessage(({ timeToReset }) => {
+    const time = Math.ceil(timeToReset / 1000)
+    return 'Try again after ' + time + ' seconds.'
+  })
+
+  DDPRateLimiter.addRule({
+    type: 'method',
+    name: 'surveys.create',
+    connectionId () {
+      return true
+    },
+    numRequests: 5,
+    timeInterval: 1000
+  });
+
+  DDPRateLimiter.addRule({
+    type: 'method',
+    name: 'surveys.get',
+    connectionId () {
+      return true
+    },
+    numRequests: 1,
+    timeInterval: 1000
+  });
+
+  DDPRateLimiter.addRule({
+    type: 'method',
+    name: 'surveys.addQuestion',
+    connectionId () {
+      return true
+    },
+    numRequests: 1,
+    timeInterval: 1000
+  });
+
+  DDPRateLimiter.addRule({
+    type: 'surveys.addAnswerToQuestion',
+    connectionId () {
+      return true
+    },
+    numRequests: 1,
+    timeInterval: 1000
+  })
+
+  DDPRateLimiter.addRule({
+    type: 'surveys.removeQuestion',
+    connectionId () {
+      return true
+    },
+    numRequests: 1,
+    timeInterval: 1000
+  })
+}
+
+
 Meteor.methods({
 
 	"surveys.create"(title,color) {
