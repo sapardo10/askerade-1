@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Tweet } from './Tweet.js'
+import React, { Component } from "react";
+import { Tweet } from "./Tweet.js";
 
 export class TweetsList extends Component {
 
@@ -12,16 +12,12 @@ export class TweetsList extends Component {
 		return this.props.tweets.map((tweet,i) => {
 
 			return (
-
-					<Tweet
-						key={i}
-						tweet={tweet}
-					/>
-
-				);
-
+				<Tweet
+					key={i}
+					tweet={tweet}
+				/>
+			);
 		});
-
 	}
 
 
