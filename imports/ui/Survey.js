@@ -7,13 +7,11 @@ import renderHTML from "react-render-html";
 import MyStatefulEditor from "./MyStatefulEditor.js";
 import RichTextEditor from "react-rte";
 
-
-
 class Survey extends Component 
 {	
 	constructor(props) {
 		super(props); 
-		let title = RichTextEditor.createValueFromString("markup", "html");
+		let title = RichTextEditor.createValueFromString("", "html");
 		this.state = {
 			survey: null,
 			editting:null,
@@ -30,11 +28,8 @@ class Survey extends Component
 			if(err)
 				throw err;
 			this.modifyState("survey",res);
-
-
 		});
 	}
-
 
 	removeQuestion(event)
 	{
@@ -134,9 +129,10 @@ class Survey extends Component
 
 	}
 
-	fillForm(title, op1, op2, op3, op4)
+	fillForm(pTitle, op1, op2, op3, op4)
 	{
-		ReactDOM.findDOMNode(this.refs.title).value = title;
+		let title = RichTextEditor.createValueFromString(pTitle, "html");
+		ReactDOM.findDOMNode(this.refs.title).value = pTitle;
 		this.modifyState("title",title);
 		if(ReactDOM.findDOMNode(this.refs.op1)!=null)
 		{
@@ -348,7 +344,8 @@ class Survey extends Component
 	}
 
 	onChange(value) {
-		ReactDOM.findDOMNode(this.refs.title).value = value;
+		this.modifyState("title",value);
+		ReactDOM.findDOMNode(this.refs.title).value = value.toString("html");
 	}
 
 	renderSur()
@@ -360,7 +357,6 @@ class Survey extends Component
 				className="container survey-cont" 
 				style={{"backgroundColor": this.state.survey.color}}>
 				<h1
-					ref={(el) => { this.top = el; }}
 				>
 					{renderHTML(this.state.survey.title)}
 				</h1>
@@ -370,7 +366,11 @@ class Survey extends Component
 				<br/>
 				<br/>
 				{this.renderConfigMenu()}
-
+				<h1
+					ref={(el) => { this.top = el; }}
+				>
+				Questions
+				</h1>
 				{this.renderquestions(q)}
 
 				<br/>
