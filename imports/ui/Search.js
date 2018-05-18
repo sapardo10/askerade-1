@@ -35,6 +35,16 @@ class Search extends Component
 		this.modifyState("detail", true);
 	}
 
+	remove(event)
+	{
+		console.log("remove");
+		event.preventDefault();
+		let id= event.target.value;
+		Meteor.call("surveys.remove", id);
+
+	}
+
+
 	results(event)
 	{
 		event.preventDefault();
@@ -48,7 +58,12 @@ class Search extends Component
 
 	renderSurveys() {
 		return this.props.surveys.map((surveyview,i) => (
-			<Surveyview key={surveyview._id} survey={surveyview} details={this.details.bind(this)} index={i} />
+			<Surveyview 
+				key={surveyview._id} 
+				survey={surveyview} 
+				details={this.details.bind(this)} 
+				remove={this.remove.bind(this)} 
+				index={i} />
 		));
 	}
 

@@ -155,6 +155,10 @@ Meteor.methods({
 		arr.push(op4);
 		return arr;
 	},
+	"surveys.remove"(_id){
+		check(_id, String);
+		Surveys.remove({_id});
+	},
 	"surveys.removeQuestion"(_id,question){
 		check(_id, String);
 		check(question, Object);

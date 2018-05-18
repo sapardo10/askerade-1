@@ -28,13 +28,32 @@ export default class Surveyview extends Component {
 
 				<br/>
 
-				<button 
-					value={this.props.survey._id}
-					data-index={this.props.index}
-					className="btn btn-primary"
-					onClick={this.props.details}
-				>Details
-				</button>
+				<div className="container">
+					<div className="row">
+						<div className="col-md-3"></div>
+						<div className="col-md-3">
+
+							<button 
+								value={this.props.survey._id}
+								data-index={this.props.index}
+								className="btn btn-primary"
+								onClick={this.props.details}
+							>Details
+							</button>
+						</div>
+						<div className="col-md-3">
+							<button 
+								value={this.props.survey._id}
+								className="btn btn-primary"
+								onClick={this.props.remove}
+							>Remove
+							</button>
+						</div>
+						<div className="col-md-3"></div>
+					</div>
+				</div>
+
+				
 
 			</li>
 
