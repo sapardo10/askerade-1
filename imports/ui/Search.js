@@ -96,48 +96,42 @@ class Search extends Component
 		}
 		return (
 			<div className="container">
-
-			<h1>Surveys done by you Yeahhh</h1>
-
-					<ul>
-
-						{this.renderSurveys()}
-
-					</ul>
-
-			{ this.props.user ? (
+				<h1>Surveys done by you Yeahhh</h1>
+				<ul>
+					{this.renderSurveys()}
+				</ul>
+				{this.props.user ? (
 					<div>
-					<h2>Add a Survey!</h2>
-					<form className="new-question" onSubmit={this.handleSubmit.bind(this)}>
-						<div className="form-group">
-							<input
-								className="form-control"
-								type="text"
-								ref="title"
-								placeholder="Type the title of the Survey"
-								required
-								hidden
+						<h2>Add a Survey!</h2>
+						<form className="new-question" onSubmit={this.handleSubmit.bind(this)}>
+							<div className="form-group">
+								<input
+									className="form-control"
+									type="text"
+									ref="title"
+									placeholder="Type the title of the Survey"
+									required
+									hidden
+								/>
+
+								<MyStatefulEditor onChange={this.onChange.bind(this)}/>            
+							</div>
+							
+							<ColorSelect 
+								color={this.state.colorSurvey} 
+								onChangeComplete={this.onChangeColor.bind(this)} 
 							/>
 
-							<MyStatefulEditor onChange={this.onChange.bind(this)}/>            
-						</div>
-						
-						<ColorSelect 
-							color={this.state.colorSurvey} 
-							onChangeComplete={this.onChangeColor.bind(this)} 
-						/>
-
-						<input
-							className="btn btn-submit"
-							type="submit"
-							placeholder="Add question"
-						/>
-
-					</form></div>) : ""
+							<input
+								className="btn btn-submit"
+								type="submit"
+								placeholder="Add question"
+							/>
+						</form></div>) : ""
 				}
 
 			</div>
-			);
+		);
 	}
 
 }
