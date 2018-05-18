@@ -70,6 +70,8 @@ class Survey extends Component
 
 	handleSubmit(event){
 		event.preventDefault();
+		this.top.scrollIntoView({ behavior: "smooth" });
+
 
 		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 		const multiple = this.state.multiple;
@@ -125,6 +127,8 @@ class Survey extends Component
 				this.updateSurvey();
 			});
 		}
+		this.top.scrollIntoView({ behavior: "smooth" });
+
 	}
 
 	fillForm(title, op1, op2, op3, op4)
@@ -147,7 +151,8 @@ class Survey extends Component
 
 	renderquestions(questions)
 	{
-		return questions.map((question,index) => {
+		let reverseQuestions=questions.reverse();
+		return reverseQuestions.map((question,index) => {
 			return  <Question
 				editQuestion={this.editQuestion.bind(this)}
 				removeQuestion={this.removeQuestion.bind(this)}
@@ -347,8 +352,14 @@ class Survey extends Component
 		if(this.state.survey!==null && this.state.survey.owner ===Meteor.userId())
 		{
 			const q = this.state.survey.questions;
-			return<div className="container survey-cont" style={{"backgroundColor": this.state.survey.color}}>
-				{renderHTML(this.state.survey.title)}
+			return<div 
+				className="container survey-cont" 
+				style={{"backgroundColor": this.state.survey.color}}>
+				<h1
+					ref={(el) => { this.top = el; }}
+				>
+					{renderHTML(this.state.survey.title)}
+				</h1>
 				<br/>
 				{this.rendeResultsButton()}
 				{this.rendeShareButton()}
