@@ -81,7 +81,7 @@ Meteor.methods({
 			{_id}
 		]}).count();
 		let op3 = Surveys.find({$and: [
-			{"answers":{$elemMatch:{"value":"mal"}}},
+			{"answers":{$elemMatch:{"value":"op3"}}},
 			{_id}
 		]}).count();
 		let op4 = Surveys.find({$and: [

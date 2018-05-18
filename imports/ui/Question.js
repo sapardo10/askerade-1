@@ -17,11 +17,11 @@ class Question extends Component
 			</div>
 		);  
 	}
-	renderOption(option)
+	renderOption(option,label)
 	{
 		return(
 			<div className="col-md-6 border" >
-				<button onClick={this.props.registerAnswer} type="button" value={option}>{option}</button>
+				<button onClick={this.props.registerAnswer} type="button" value={label}>{option}</button>
 			</div>
 		);
 	}
@@ -62,12 +62,12 @@ class Question extends Component
 				<div>
 					<div className="row" >
 						
-						{this.renderOption(this.props.question.op1)}
-						{this.renderOption(this.props.question.op2)}						
+						{this.renderOption(this.props.question.op1,"op1")}
+						{this.renderOption(this.props.question.op2,"op2")}						
 					</div>
 					<div className="row" >
-						{this.renderOption(this.props.question.op3)}
-						{this.renderOption(this.props.question.op4)}
+						{this.renderOption(this.props.question.op3,"op3")}
+						{this.renderOption(this.props.question.op4,"op4")}
 					</div>
 				</div>
 			);
