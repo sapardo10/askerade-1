@@ -71,7 +71,7 @@ class Search extends Component
 		event.preventDefault();
 		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 		Meteor.call("surveys.create", title, this.state.surveyColor);
-		this.modifyState("clear", true);
+		this.top.scrollIntoView({ behavior: "smooth" });
 
 	}
 
@@ -99,7 +99,9 @@ class Search extends Component
 		}
 		return (
 			<div className="container">
-				<h1>Surveys done by you Yeahhh</h1>
+				<h1
+					ref={(el) => { this.top = el; }}
+				>Surveys done by you </h1>
 				<ul>
 					{this.renderSurveys()}
 				</ul>
