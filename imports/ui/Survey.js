@@ -5,6 +5,7 @@ import Question from "./Question.js";
 import swal from "sweetalert";
 import renderHTML from "react-render-html";
 import MyStatefulEditor from "./MyStatefulEditor.js";
+import RichTextEditor from "react-rte";
 
 
 
@@ -12,12 +13,13 @@ class Survey extends Component
 {	
 	constructor(props) {
 		super(props); 
+		let title = RichTextEditor.createValueFromString("markup", "html");
 		this.state = {
 			survey: null,
 			editting:null,
 			multiple:true,
 			tweets:[],
-			title:"Type the title"
+			title
 		};
 	}
 

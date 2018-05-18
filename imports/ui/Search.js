@@ -6,6 +6,8 @@ import MyStatefulEditor from "./MyStatefulEditor.js";
 import Surveyview from "./Surveyview.js";
 import Survey from "./Survey.js";
 import Result from "./Result.js";
+import RichTextEditor from "react-rte";
+
 
 import ColorSelect from "./ColorSelect.js";
 
@@ -13,10 +15,11 @@ class Search extends Component
 {	
 	constructor(props) {
 		super(props); 
+		let title = RichTextEditor.createValueFromString("markup", "html");
 		this.state = {
 			colorSurvey: "#FFFFFF",
 			clear:false,
-			title:"",
+			title
 		};
 	}
 
@@ -70,15 +73,15 @@ class Search extends Component
 
 	handleSubmit(event){
 		event.preventDefault();
-		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
+		const title = this.state.title.toString("html");
 		Meteor.call("surveys.create", title, this.state.surveyColor);
 		this.top.scrollIntoView({ behavior: "smooth" });
-		this.modifyState("title","");
+		//this.modifyState("title","");
 	}	
 
 	onChange(value) {
 		this.modifyState("title",value);
-		ReactDOM.findDOMNode(this.refs.title).value = value;
+		ReactDOM.findDOMNode(this.refs.title).value = value.toString("html");
 	}
 
 	onChangeColor(color) {
