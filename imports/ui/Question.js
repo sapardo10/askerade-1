@@ -6,10 +6,10 @@ class Question extends Component
 	render()
 	{
 		return (
-			<div className="card mx-auto question-cont"  >
+			<div className="card mx-auto question-cont" style={{"backgroundColor": this.props.question.color}}  >
 				<div className="card-body" >
 					<div className="card-title" >{renderHTML(this.props.question.title)} </div>
-					<div className="container" style={{"backgroundColor": this.props.question.color}}>
+					<div className="container" >
 						{this.renderOptions()}
 						
 					</div>
@@ -20,9 +20,10 @@ class Question extends Component
 	renderOption(option,label)
 	{
 		return(
-			<div className="col-md-6 border" >
-				<button 
-					className="btn btn-primary"
+			<div className="container" >
+				<button
+					data-toggle="list" 
+					className="list-group-item list-group-item-action btn-opcion"
 					onClick={this.props.registerAnswer} 
 					type="button" 
 					value={label}>
@@ -68,7 +69,7 @@ class Question extends Component
 		else if(this.props.question.multiple && this.props.answer)
 		{
 			return(
-				<div>
+				<div style={{"backgroundColor": this.props.question.color}}>
 					<div className="row" >
 						
 						{this.renderOption(this.props.question.op1,"op1")}

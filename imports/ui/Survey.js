@@ -74,7 +74,8 @@ class Survey extends Component
 		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 		const multiple = this.state.multiple;
 		const _id= this.state.editting||new Date().getTime().toString();
-		
+		const color = this.state.survey.color;
+
 		var question = {
 			title,
 			multiple,
@@ -96,6 +97,7 @@ class Survey extends Component
 				op3,
 				op4,
 				_id,
+				color,
 			};
 		}
 
@@ -145,6 +147,7 @@ class Survey extends Component
 
 	renderquestions(questions)
 	{
+		console.log(this.state.survey.color);
 		return questions.map((question,index) => {
 			return  <Question
 				editQuestion={this.editQuestion.bind(this)}

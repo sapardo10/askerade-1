@@ -35,7 +35,6 @@ li {
   border-radius: 5px;
 }
 
-
 .survey-list {
   background-color: #F0E302;
   margin-bottom: 10px;
@@ -150,4 +149,7 @@ form {
   border-style: solid;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+button.btn-opcion:hover {
+  background-color: #4A90E2;
 }
