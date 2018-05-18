@@ -25,21 +25,15 @@ export default class StackedBarChart extends Component {
 
 	componentWillUpdate(newProps)
 	{
-		console.log();
 		this.update(newProps);
 	}
 
 	update(props)
 	{
 		if(!props.data)return;
-		console.log("update");
 		d3.selectAll("svg > *").remove();
 
 		let data = props.data;
-		for(let i = 0;i<4;i++)
-		{
-			console.log(data.series[i].values[0]);
-		}
 
 		this.groupHeight = this.barHeight * data.series.length;
 

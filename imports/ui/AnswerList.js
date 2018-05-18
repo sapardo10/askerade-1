@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import RealAnswer from "./RealAnswer.js";
+import renderHTML from "react-render-html";
+
 export default class AnswerList extends Component {
 	constructor(props){
 		super(props);
@@ -18,7 +20,7 @@ export default class AnswerList extends Component {
 	render() {
 		return (
 			<div className = "container">
-				<h1>{this.props.question.title}</h1>
+				<h1>{renderHTML(this.props.question.title)}</h1>
 				{this.renderList()}
 			</div>
 		);

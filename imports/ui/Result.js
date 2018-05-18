@@ -48,7 +48,7 @@ class Answer extends Component
 
 	renderViz(question)
 	{
-		if(question===null)
+		if(!question)
 		{
 			return <h2>No more questions  </h2>;
 		}
@@ -63,7 +63,6 @@ class Answer extends Component
 			for(let i=0;i<answers.length;i++)
 			{
 				let actual = answers[i];
-				console.log(actual);
 				if(actual.question_id===question._id)
 				{
 					if(actual.value==="op1")

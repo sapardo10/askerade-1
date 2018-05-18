@@ -151,9 +151,6 @@ class Survey extends Component
 	fillFormQuestion(question)
 	{
 		let checkbox = ReactDOM.findDOMNode(this.refs.multiple);
-		console.log("pregunta: "+question.multiple);
-		console.log("estado: "+this.state.multiple);
-		console.log("estado: "+checkbox.checked);
 
 		if(question.multiple!==checkbox.checked)
 		{
@@ -226,7 +223,7 @@ class Survey extends Component
 			<button 
 				onClick={this.share.bind(this)}
 				value={this.id}
-				className="btn btn-primary"
+				className="btn btn-submit"
 			>
 			Share
 			</button>
@@ -264,12 +261,11 @@ class Survey extends Component
 
 	renderTwitterButton()
 	{
-		console.log("renderTwitterButton");
 		return(
 			<div className="row">
 				<div className="col-md-12" >
 					<button
-					onClick={this.onTwitterClick.bind(this)}
+						onClick={this.onTwitterClick.bind(this)}
 					>Add from twitter</button>
 				</div>
 			</div>
