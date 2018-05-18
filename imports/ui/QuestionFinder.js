@@ -17,7 +17,6 @@ export default class QuestionFinder extends Component {
 				onSubmit={this.handleSubmit.bind(this)}
 				className="form-group">
 				<div className="form-row">
-					<label>Ingresa el termino de busqueda</label>
 					<input
 						className="form-control"
 						ref="tweet"
@@ -26,10 +25,15 @@ export default class QuestionFinder extends Component {
 					/>
 				</div>
 				<input 
+					vale="Search"
 					className="btn btn-submit"
 					type="submit"							
 				/>
 			</form>
+				<button
+					className="btn btn-danger"
+					onClick={this.props.stop}
+				>Stop</button>
 
 			<TweetsList
 				removeTweet={this.props.removeTweet}

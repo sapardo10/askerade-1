@@ -7,6 +7,8 @@ import { check } from "meteor/check";
 // TODO: Now we have only one stream overall,
 // we should have one per user at least
 let stream = null;
+let lastQuery = null;
+let stop=false;
 
 // This is a in memory only collection
 export const Tweets = new Mongo.Collection("tweets");
@@ -24,9 +26,17 @@ if (Meteor.isServer) {
 			check(_id, String);
 			Tweets.remove({_id});
 		},
+		"twitter.stop"() {
+			stop=true;
+			if (stream ) {
+				console.log("Stopping previous stream");
+				stream.destroy();
+			}
+		},
 		"twitter.stream"(query) {
+			stop=false;
 			console.log("Twitter search " + query);
-
+			lastQuery=query;
 			// Create the Twitter object
 			let client = new Twitter({
 				consumer_key:"8tt6uX5iqu1fVmBBMrkGCBMwL",
@@ -36,7 +46,7 @@ if (Meteor.isServer) {
             
 			});
 
-			if (stream) {
+			if (stream && lastQuery!==query) {
 				console.log("Stopping previous stream");
 				stream.destroy();
 				// Remove all the tweets
@@ -45,13 +55,17 @@ if (Meteor.isServer) {
 
 			stream = client.stream("statuses/filter", {track: query});
 			stream.on("data", Meteor.bindEnvironment(function(tweet) {
+				if(!stop)
+				{
 				Tweets.insert(tweet);
+				}
 			}));
 
 			stream.on("error", function(error) {
 				console.log(error);
 				throw Meteor.Error(error);
 			});
+			lastQuery=query;
 		}// twitter.stream
 	}); //Meteor.methods
 }

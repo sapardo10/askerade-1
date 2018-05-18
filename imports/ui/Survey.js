@@ -380,6 +380,7 @@ class Survey extends Component
 		if(this.state.twitter)
 		{
 			return <QuestionFinder
+				stop={this.stop}
 				removeTweet={this.removeTweet.bind(this)}
 				useTweet={this.useTweet.bind(this)}
 				tweets={this.props.tweets}
@@ -387,6 +388,11 @@ class Survey extends Component
 				handleSubmit={this.handleTwitterSearch.bind(this)}/>;
 		}
 
+	}
+	stop()
+	{
+		console.log("Stop");
+		Meteor.call("twitter.stop");
 	}
 	
 	removeTweet(event)
