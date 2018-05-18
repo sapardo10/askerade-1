@@ -125,6 +125,7 @@ export default class Question extends Component
 						onSubmit={this.props.handleSubmit}
 					>
 						<textarea 
+							maxlength="1000"
 							placeholder="Answer here"
 							type="text"
 							ref="answer"

@@ -114,7 +114,6 @@ class Answer extends Component
 			for(let i=0;i<answers.length;i++)
 			{
 				let actual = answers[i];
-				console.log(actual);
 				if(actual.question_id===question._id)
 				{
 					realAnsers.push(actual.value);
