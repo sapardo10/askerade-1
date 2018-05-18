@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import RichTextEditor from 'react-rte';
 
 export default class MyStatefulEditor extends Component {
+  /*
   static propTypes = {
     onChange: PropTypes.func
   };
+  */
 
-  state = {
-    value: RichTextEditor.createEmptyValue()
+  constructor(props) {
+    super(props); 
+    console.log(props.title);
+
   }
 
-  onChange = (value) => {
-    this.setState({value});
+  onChange(value){
     if (this.props.onChange) {
       // Send the changes up to the parent component as an HTML string.
       // This is here to demonstrate using `.toString()` but in a real app it
@@ -28,8 +31,8 @@ export default class MyStatefulEditor extends Component {
     return (
       <RichTextEditor
         placeholder="Type the title"
-        value={this.state.value}
-        onChange={this.onChange}
+        value={RichTextEditor.createValueFromString(this.props.title, 'html')}
+        onChange={this.onChange.bind(this)}
       />
     );
   }

@@ -16,6 +16,7 @@ class Search extends Component
 		this.state = {
 			colorSurvey: "#FFFFFF",
 			clear:false,
+			title:"",
 		};
 	}
 
@@ -72,10 +73,11 @@ class Search extends Component
 		const title = ReactDOM.findDOMNode(this.refs.title).value.trim();
 		Meteor.call("surveys.create", title, this.state.surveyColor);
 		this.top.scrollIntoView({ behavior: "smooth" });
-
-	}
+		this.modifyState("title","");
+	}	
 
 	onChange(value) {
+		this.modifyState("title",value);
 		ReactDOM.findDOMNode(this.refs.title).value = value;
 	}
 
@@ -119,7 +121,7 @@ class Search extends Component
 									hidden
 								/>
 
-								<MyStatefulEditor onChange={this.onChange.bind(this)} clear={this.state.clear}/>            
+								<MyStatefulEditor onChange={this.onChange.bind(this)} title={this.state.title}/>            
 							</div>
 							
 							<ColorSelect 

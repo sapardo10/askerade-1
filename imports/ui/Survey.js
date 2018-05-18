@@ -16,7 +16,8 @@ class Survey extends Component
 			survey: null,
 			editting:null,
 			multiple:true,
-			tweets:[]
+			tweets:[],
+			title:"Type the title"
 		};
 	}
 
@@ -134,6 +135,7 @@ class Survey extends Component
 	fillForm(title, op1, op2, op3, op4)
 	{
 		ReactDOM.findDOMNode(this.refs.title).value = title;
+		this.modifyState("title",title);
 		if(ReactDOM.findDOMNode(this.refs.op1)!=null)
 		{
 			ReactDOM.findDOMNode(this.refs.op2).value = op2;
@@ -344,8 +346,8 @@ class Survey extends Component
 	}
 
 	onChange(value) {
-   	 ReactDOM.findDOMNode(this.refs.title).value = value;
- 	}
+		ReactDOM.findDOMNode(this.refs.title).value = value;
+	}
 
 	renderSur()
 	{
@@ -373,7 +375,7 @@ class Survey extends Component
 				<br/>
 				<br/>
 				<div className="container new-question-form">
-				<h2 className="title-add-question"><strong>Add another question!</strong></h2>
+					<h2 className="title-add-question"><strong>Add another question!</strong></h2>
 					<hr/>
 					{this.renderConfigQuestion()}
 					<form 
@@ -393,7 +395,9 @@ class Survey extends Component
 										hidden
 									/> 
 									<h2>Question:</h2>       
-									<MyStatefulEditor onChange={this.onChange.bind(this)}/>    
+									<MyStatefulEditor
+										title={this.state.title}
+										onChange={this.onChange.bind(this)}/>    
 								</div>
 
 								
