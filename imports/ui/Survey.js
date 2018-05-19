@@ -213,7 +213,7 @@ class Survey extends Component
 		}
 		else
 		{
-			let url = "https://askerade.herokuapp.com/#/survey/"+this.id;
+			let url = "https://askerade.herokuapp.com/#/answer/"+this.id;
 			swal("Share", url);
 		}
 	}
