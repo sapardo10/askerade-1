@@ -143,6 +143,7 @@ class Answer extends Component
 				<div className="row">
 					<div className="col-sm-6">
 						<button
+							className="btn btn-primary"
 							onClick={this.prev.bind(this)}
 						>
 							&laquo; Previous
@@ -150,6 +151,7 @@ class Answer extends Component
 					</div>
 					<div className="col-sm-6">
 						<button
+							className="btn btn-primary"
 							onClick={this.next.bind(this)}
 						>
 							Next &raquo;

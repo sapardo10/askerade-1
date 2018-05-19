@@ -266,6 +266,7 @@ class Survey extends Component
 			<div className="row">
 				<div className="col-md-12" >
 					<button
+						className="btn btn-primary"
 						onClick={this.onTwitterClick.bind(this)}
 					>Add from twitter</button>
 				</div>
