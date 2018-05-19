@@ -40,9 +40,9 @@ if (Meteor.isServer) {
 			// Create the Twitter object
 			let client = new Twitter({
 				consumer_key:"8tt6uX5iqu1fVmBBMrkGCBMwL",
-				consumer_secret: "QKjw2Wl1FQkKhqLExXQKhy9bCIplTEeV7ywkvhJ3O3rmg77nVJ",
-				access_token_key: "97156244-xqqkT9oBsulivxznBehM1V142MOvpirruZ3PylQX4",
-				access_token_secret: "0HiksTO0ECE2KgBfrClk08IrVISQfp3Y1yGszWyEeLHJL"
+-				consumer_secret: "QKjw2Wl1FQkKhqLExXQKhy9bCIplTEeV7ywkvhJ3O3rmg77nVJ",
+-				access_token_key: "97156244-xqqkT9oBsulivxznBehM1V142MOvpirruZ3PylQX4",
+-				access_token_secret: "0HiksTO0ECE2KgBfrClk08IrVISQfp3Y1yGszWyEeLHJL"
             
 			});
 

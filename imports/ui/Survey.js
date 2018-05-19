@@ -213,8 +213,12 @@ class Survey extends Component
 		}
 		else
 		{
+<<<<<<< HEAD
 			let url = "https://askerade.herokuapp.com/#/survey/"+this.id;
 			
+=======
+			let url = "https://askerade.herokuapp.com/#/answer/"+this.id;
+>>>>>>> 56fb2cf6a308646b4aa9478c282f634b99ffe6c5
 			swal("Share", url);
 		}
 	}
@@ -267,6 +271,7 @@ class Survey extends Component
 			<div className="row">
 				<div className="col-md-12" >
 					<button
+						className="btn btn-primary"
 						onClick={this.onTwitterClick.bind(this)}
 					>Add from twitter</button>
 				</div>

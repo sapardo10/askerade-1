@@ -20,6 +20,12 @@ li {
   list-style: none;
   padding: 15px;
 }
+.btn {
+    border-style: solid;
+    border-color: #000000;
+    border-width: 1px;
+    margin-top: 10px;
+}
 
 .accounts-dialog,.login-buttons {
   font-family: 'Raleway', sans-serif;
@@ -128,12 +134,7 @@ input:checked + .slider:before {
   margin-top: 20px;
 }
 
-.btn {
-    border-style: solid;
-    border-color: #000000;
-    border-width: 1px;
-    margin-top: 10px;
-}
+
 
 form {
   margin-top: 15px;
