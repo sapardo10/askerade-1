@@ -25,6 +25,14 @@ To install this repository on your local machine you should have:
 ### Procedure
 Follow these steps:
 
+0. Setup  your credentials on the server using environment variables:
+```
+export TWITTER_CONSUMER_KEY="yourCredentialsHere"
+export TWITTER_CONSUMER_SECRET="yourCredentialsHere"
+export TWITTER_ACCESS_TOKEN_KEY="yourCredentialsHere"
+export TWITTER_ACCESS_TOKEN_SECRET="yourCredentialsHere"
+```
+
 1. Download the source code to your computer
 2. Unzip it if you download it and didn't clone it
 3. Open your folder and go inside
