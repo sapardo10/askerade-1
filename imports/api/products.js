@@ -36,6 +36,8 @@ if (Meteor.isServer) {
     timeInterval: 1000
   });
 
+ //Buena forma de manejar el tiempo entre solicitudes y de limitarlas 
+ 
   DDPRateLimiter.addRule({
     type: 'method',
     name: 'products.remove',
@@ -76,6 +78,7 @@ Meteor.methods({
     check(name, String);
     check(description, String);
     check(urlImage, String);
+    //Muy importante chequear no solo que sea string sino que no tenga ciertos caracteres como " o ) 
  
     // Make sure the user is logged in before inserting a product
     if (!Meteor.userId()) {
