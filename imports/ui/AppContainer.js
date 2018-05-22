@@ -14,6 +14,19 @@ import Survey from "./Survey.js";
 import Answer from "./Answer.js";
 import Surveyview from "./Surveyview.js";
 
+// Cuando se desplega localmente faltan varias dependencias se sugiere hacer lo siguiente: 
+// meteor npm install --save twitter 
+//meteor npm install --save @babel/runtime react react-color react-dom
+//react-router-dom twitter query-string prop-types react-rte marked
+//react-render-html sweetalert d3
+
+//En la versión desplegada en heroku y localmente sale un error cuando se piden los detalles de una encuesta, de la misma forma fue dificil entender como 
+//funcionaba la aplicación y no se pueden crear nuevas encuestas. 
+
+//No se puede probar funcionalidad por que con las encuestas que ya estaban ocurría un error al ver los detallers y al inciiar sesión no ecuentro la opción de añadir encuestas. 
+
+
+
 class AppContainer extends Component {
 	render() {
 		return (
