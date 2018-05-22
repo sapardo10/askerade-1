@@ -11,6 +11,7 @@ export default class QuestionFinder extends Component {
 		console.log(codigo);
 		this.props.handleSubmit(codigo);
 	}
+	//buena organizacion 
 	render() {
 		return (<div>
 			<form 
